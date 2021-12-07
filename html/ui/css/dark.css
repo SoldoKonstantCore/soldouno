@@ -1,0 +1,472 @@
+body, html {
+	background-color: #1A2F1D;
+	color: #ccc !important;
+	text-shadow: 0 0 15px#79DD55;
+}
+
+.right-side {
+	background-color: #1A2F1D;
+}
+
+.content {
+	background-color: #000;
+}
+
+.dashbox {
+	background-color: #151515;
+	box-shadow: 0px 0px 22px 0 rgba(225,140,255,1);
+	border: 1px solid #a7a8af;
+	color: white;
+}
+
+.left-side {
+	background-color: #111;
+}
+
+.right-side > .page > .content-header {
+	background-color: #1A2F1D;
+}
+
+.right-side > .page > .content-header > h1 {
+	color: #fff
+}
+
+.left-side .sidebar > .sidebar-menu > li > a {
+	border: none;
+}
+
+.sidebar > .sidebar-menu > li > a:hover {
+	background-color: #1A2F1D;
+	color: white;
+	border: none;
+}
+
+.sidebar > .sidebar-menu > li.active > a {
+	background-color: #1A2F1D;
+	color: white;
+	border: none;
+	box-shadow: 0 0 12px 0 #f60;
+}
+
+.modal-content {
+	background-color: 2A3A26;
+	color: #aaa;
+	box-shadow:  0 0 18px 0 #ff9900, 0 0 38px 0 #33CC78, 0 0 8px 0 #33CC78;
+	border: none;
+}
+
+#blocks_page > .content > .row, #peers_page > .content > .row {
+	background-color: black;
+	border-bottom: 1px solid #f90;
+	box-shadow: 0 -3px 10px -2px #33CC78;
+}
+
+.table-striped > tbody > tr:nth-of-type(odd) {
+	background-color: black;
+}
+
+.table-striped > tbody > tr:nth-of-type(even) {
+	background-color: #111;
+}
+ .table {
+	 color: #ccc;
+ }
+
+.table-striped > tbody > tr > td {
+	color: white;
+}
+
+.label-primary {
+	color: white;
+}
+
+.callout {
+	background-color: black !important;
+	box-shadow: 0px 0px 10px 0px #33CC78 !important;
+}
+
+.nav-pills {
+	background-color: black;
+	border: none;
+}
+
+.nav-pills>li>a, .nav-pills>li>a:focus {
+	color: #aaa;
+	border: none;
+	box-shadow: 0 0 4px 0 #33CC78;
+}
+
+.nav>li>a:hover {
+	background-color: transparent;
+	color: #ccc;
+	box-shadow: 0 4px 8px 0 #33CC78;
+}
+
+
+.nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover {
+	background-color: black;
+	color: white;
+	border: none;
+	box-shadow: 0 -4px 8px -3px #ff9900, 0 -6px 12px 0 #33CC78;
+}
+
+.btn.btn-primary {
+	background-color:#22996F;
+	border: 3px solid#22996F;
+}
+
+#lockscreen {
+	background-color: black;
+}
+
+#center > tbody > tr > td > div {
+	background-color: #111 !important;
+	box-shadow: 0 0 14px -2px #f90, 0 0 32px 0 #33CC78;
+}
+
+.lockscreen-item {
+	background-color: black;
+	box-shadow: 0 0 12px 0 #33CC78;
+}
+
+.lockscreen-item > .lockscreen-credentials .btn {
+	background-color: transparent;
+}
+
+.open > .dropdown-menu {
+	background-color: black;
+	box-shadow: 0 0 20px 0 #33CC78;
+}
+
+.dropdown-menu > li > a {
+	color: #ccc;
+	text-shadow: 0 0 7px #33CC78, 0 0 12px #33CC78, 0 0 16px #33CC78;
+}
+
+.dropdown-menu > li > a:hover {
+	color: white;
+	background-color: black;
+	text-shadow: 0 0 7px #33CC78, 0 0 12px #33CC78, 0 0 16px #33CC78, 0 0 5px #33CC78, 0 0 10px #33CC78;
+	outline: none;
+}
+
+a {
+	transition: color 0.1s linear, text-shadow 0.2s linear;
+}
+
+a:hover {
+	color: #80FF77;
+	outline: none;
+	text-shadow: 0 0 7px #33CC78, 0 0 12px #33CC78, 0 0 16px #33CC78, 0 0 5px #33CC78, 0 0 10px #33CC78;
+}
+
+.btn.btn-default {
+	background-color: #182211;
+	border: 1px solid #110022 !important;
+	color: #ccc;
+}
+
+.btn.btn-default:hover {
+
+	color: #fff;
+
+}
+
+.data-pagination {
+	color: white;
+}
+
+#account_link_in_sidebar > span {
+	 text-shadow: none;
+}
+
+.navbar-nav-top {
+	background-color: #514667;
+}
+
+body {
+	background-color: #1A2F1D;
+	scrollbar-color: black white;
+}
+
+.content {
+	background-color: #1A2F1D;
+}
+
+section.content > div.data-container {
+	background-color:#26303A;
+	box-shadow: 0 0 15px -3px #33CC78;
+}
+
+.nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover {
+	background-color:#26303A;
+	color: #ccc;
+	margin-top: 11px;
+}
+
+.nav-pills>li>a, .nav-pills>li>a:focus {
+	background-color:#26303A;
+	border: none;
+}
+
+.nav>li>a:hover {
+	background-color:#26303A;
+	color: #ccc;
+}
+
+.table {
+	background-color: transparent;
+}
+
+.table>thead>tr>th {
+	background-color: transparent;
+	color: #7FA886;
+}
+
+#blocks_page > .content > .row, #peers_page > .content > .row {
+	background-color:#3B6736;
+	border: none;
+}
+
+.small-box {
+	color: #ccc !important;
+}
+
+.nav.navbar-nav>li {
+	background-color: transparent;
+}
+
+.navbar .nav > li > a:active {
+	background-color: #567759;
+}
+
+.nav>li>a {
+	color: #ccc;
+	transition: all .2s linear;
+}
+
+.navbar .nav > li > a:hover, .navbar .nav > li > a:active, .navbar .nav > li > a:focus, .navbar .nav .open > a, .navbar .nav .open > a:hover, .navbar .nav .open > a:focus {
+	color: white;
+	background-color: #213;
+	border-radius: 0px;
+}
+
+.table-striped > tbody > tr:nth-of-type(odd) {
+	background-color: transparent;
+}
+
+.table-striped > tbody > tr:nth-of-type(even) {
+	background-color: rgba(255,255,255,0.02);
+}
+
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+	border: none;
+	color: #aaa;
+}
+
+a {
+	color: #94E4CD;
+}
+
+a:hover, a:active, a:focus {
+	color:#93D7E3;
+}
+
+.modal-content {
+	color: #aaa;
+	background-color: #2A3A26;
+}
+
+.modal-header {
+	background-color:#26303A;
+	border-radius: 20px;
+}
+
+.modal-footer {
+	background-color:#26303A;
+	border-radius: 20px;
+}
+
+.modal-body > div {
+	background-color:#26303A;
+}
+
+div.modal-body > .callout.callout-info {
+	background-color:#26303A;
+}
+
+#header-height, #header-connection-status {
+	background-color: black;
+	color: #999;
+}
+
+::-webkit-scrollbar {
+	width: 15px;
+	height: 15px;
+}
+::-webkit-scrollbar-track-piece  {
+	background-color:#26303A;
+}
+::-webkit-scrollbar-thumb {
+	background-color: #000;
+	box-shadow: 0 0 35px 0 #52FF33;
+}
+
+.data-container.data-empty .data-empty-container, .data-loading-container {
+	background-color:#26303A;
+}
+
+#generate_token_form, #token_modal_validate_token, #generate_hallmark_form, #hallmark_modal_parse_hallmark, #hash_modal_calculate_hash, #user_info_modal_description {
+	background-color:#26303A;
+	color: #ccc;
+}
+
+.form-control {
+	color: #ccc;
+	background-color: #111;
+	box-shadow: none;
+}
+
+.form-control[readonly], .form-control[readonly]:focus {
+	background-color:#182629;
+	box-shadow: none;
+	color: #ccc;
+}
+
+.navbar-nav>li>.dropdown-menu {
+	background-color: #111;
+	color: #ccc;
+	box-shadow: 0 0 10px -2px #f90, 0 0 20px 0 #93c;
+}
+
+.navbar .nav a, .navbar .nav a:hover, .navbar .nav a:focus {
+	color: #ccc;
+	background-color: #111;
+}
+
+.navbar-nav>li>.dropdown-menu>li>a {
+	color: #ccc;
+}
+
+.navbar-nav>li>.dropdown-menu>li>a:hover {
+	background-color:#26303A;
+}
+
+.callout.callout-danger {
+	background-color: #553333;
+	color: #ccc;
+}
+
+td.numeric {
+	text-shadow: none;
+}
+
+td > i {
+	text-shadow: none;
+}
+
+.navbar .navbar-right > .nav {
+	background-color: transparent;
+}
+
+.box {
+	background-color: transparent;
+}
+
+.box .box-header > h3 {
+	color: #ccc !important;
+}
+
+.sidebar a {
+	color: #ccc;
+}
+
+span {
+	color: #ccc;
+}
+
+span.label.label-primary {
+	background-color: #55D7EE;
+	color: black;
+}
+
+.input-group .input-group-addon {
+	background-color: transparent;
+}
+
+.small-box .icon {
+	color: #cccacf;
+}
+
+.sidebar > .sidebar-menu > li.sidemenuseparator {
+	box-shadow: 0px -3px 4px 0px black;
+}
+
+.alert-danger {
+	background-color: #100;
+	color: #ffaaaa !important;
+}
+
+.alert {
+	background-color: #110;
+	color: #ffffaa;
+}
+
+#messages_page .content-splitter-right-inner, #message_content {
+	background-color: transparent;
+}
+
+#inline_message_form {
+	background-color: black;
+	border: 1px solid black !important;
+}
+
+#message_sidebar > .content-splitter-sidebar-inner > div > .list-group-item {
+	background-color: #111;
+	border-right: 1px solid #f90 !important;
+	border-top: 1px solid #f90 !important;
+	text-shadow: none !important;
+}
+
+.list-group-item.active .list-group-item-text, .list-group-item.active:focus .list-group-item-text, .list-group-item.active:hover .list-group-item-text, a.list-group-item .list-group-item-heading {
+	color: #ccc;
+	text-shadow: none !important;
+}
+
+#inline_message_password {
+	border: 1px solid #425;
+}
+
+#inline_message_text {
+	border-bottom: 1px solid #425;
+}
+
+.popover-content {
+	background-color: #111;
+	color: #ccc;
+	border: 1px solid #000;
+}
+
+#downloading_blockchain {
+	background-color: #89B9BF;
+}
+
+.db_active div span {
+	text-shadow: none;
+}
+
+.color1 {
+	background-color: #384525 !important;
+}
+
+.color2 {
+	background-color:#357A64!important;
+}
+
+.color3 {
+	background-color: #4F7468 !important;
+}
+
+.color4 {
+	background-color: #548F6F !important;
+}
