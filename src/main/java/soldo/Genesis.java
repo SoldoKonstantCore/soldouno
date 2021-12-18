@@ -20,38 +20,42 @@ import soldo.util.Convert;
 
 public final class Genesis {
 
-    public static final long GENESIS_BLOCK_ID = -1925503574482420123L;
+    public static final long GENESIS_BLOCK_ID = -6523299233707585364L;
     public static final long CREATOR_ID = 6961384895484640367L;
-    public static final long GENESIS_BLOCK_AMOUNT =Constants.MAX_BALANCE_centesimo; 
+    public static final long GENESIS_BLOCK_AMOUNT =Constants.MAX_BALANCE_centesimo;
     public static final byte[] CREATOR_PUBLIC_KEY = {
         -30, -21, -18, 24, 53, 118, -128, -13, -68, -91, -27, 91, 36, -110, 11, -82, -54, 102, 15, 39, 22, 49, -87, -22, 91, 77, 99, 42, -117, -124, -12, 119
     };
     
+
     public static final long[] GENESIS_RECIPIENTS = {
-            Long.parseUnsignedLong("634424746364288347")
+            Long.parseUnsignedLong("17862279112056421364")
     };
     
-     
     public static final long[] first_RECIPIENTS = {
-            Account.getId(Convert.parseHexString("08fa86ba6a005a82688addda201e80c958dee8cfd2531711988b56eaddebf335")),
-            Account.getId(Convert.parseHexString("8a1c37c07f81b4587e8f53e2a150f13071bad67935eedf7433dfd0fc9339fc3d")),
-            Account.getId(Convert.parseHexString("2846c0ea72f8fc006398eda337d366eb9971bc5e1df6b1c2a11dfd9275895273")),
-            Account.getId(Convert.parseHexString("a0e125a88d419541f893a894687cf6d77117a186ea9d581c76d4c4e6fcb84713")),
-            Account.getId(Convert.parseHexString("d2b367d581a0a5ef559f5821d071113bc31a9b913e53f94b6b8b6af885caa20d"))
+            Account.getId(Convert.parseHexString("088ac78b0fce085549e33493e253d51908596423c0ed25ff5236f4f2f56dc85c")),
+            Account.getId(Convert.parseHexString("f463dfb44a5fa07ee811eb41b693f1b527e147eaeaead65df3f74d1e66ae094b")),
+            Account.getId(Convert.parseHexString("4b232a79a4bef30345d6fd3a46cedb5b61f12afe4be9d9372a99ffc93af5fd3b")),
+            Account.getId(Convert.parseHexString("c7ebca4cc9c7d4da3cfc43bdbd493aa619a2e7a29e00862c785485c2ea387a5c")),
+            Account.getId(Convert.parseHexString("44b14a722cc4ed587cc00852d494d50d46f63253c479aec4ef572bb110deff0c")),
+            Account.getId(Convert.parseHexString("49c6777b50628242e2a7e7c582923bfce4e379c3a5113a98992c00738d419c5c"))
                
     };
+
 
     public static final long[] GENESIS_AMOUNTS = {
             15000000000L
     };
     
+
     public static final byte[][] GENESIS_SIGNATURES = {
-            {-63, 111, 126, 88, -29, -64, 31, 72, -20, 91, -116, 60, -108, 63, 44, 45, -27, -91, -109, 73, 117, 11, -123, -58, -25, -38, 35, -15, -106, -80, 39, 8, -114, -63, -118, 39, -52, -123, -70, -44, 8, 28, 63, 98, -65, 45, -92, -36, 125, -24, 94, 102, 119, 98, 124, -105, 91, -78, 121, 36, -119, -104, -72, 42}
+            {12, 35, -35, 32, -28, 21, -45, -103, 33, 18, 114, -110, -128, -44, 118, -104, 113, -43, -46, 80, 67, -14, -123, -71, -97, -78, -67, 127, 32, -53, -56, 13, 110, -127, 83, -121, -110, -79, 93, -26, -65, -38, -104, 93, 32, 90, -95, 19, 86, 92, -52, -26, 71, -26, -22, 6, -76, -78, -71, -38, -15, -1, 49, 52}
 
         };
 
+
     public static final byte[] GENESIS_BLOCK_SIGNATURE = new byte[]{
-    	25, 123, -82, 7, 126, 46, -89, -49, -72, 54, 0, 64, -95, -99, 109, -42, -101, 19, -8, 93, -37, -87, -27, -50, -49, 44, 113, 60, 123, -73, -96, 3, -116, 117, -49, 85, -70, 2, -100, -33, -89, 2, 52, -37, 10, 33, 47, -28, -59, 50, -7, 48, -51, 71, 48, -47, 43, 47, 99, -72, -120, -40, -18, 66
+    	62, 123, -53, -16, 58, 119, 68, -72, 35, 40, 5, -83, 62, 123, -51, -84, -125, -19, 14, -60, 67, 69, -37, -33, -59, -110, 119, 124, -12, -84, -74, 0, 62, -77, -97, 75, 1, -43, 65, -36, 72, -94, -94, 92, 125, 109, 26, -22, 43, 114, -83, -70, 3, -1, -22, 50, 26, -66, -27, 19, 53, 126, 66, 27
     };
 
     private Genesis() {} // never

@@ -284,10 +284,10 @@ public final class API {
             gzipHandler.setMinGzipSize(soldo.peer.Peers.MIN_COMPRESS_SIZE);
             apiHandler.setGzipHandler(gzipHandler);
 
-            apiHandler.addServlet(APITestServlet.class, "/test");
-            apiHandler.addServlet(APITestServlet.class, "/test-proxy");
+        //    apiHandler.addServlet(APITestServlet.class, "/test");
+        //    apiHandler.addServlet(APITestServlet.class, "/test-proxy");
 
-            apiHandler.addServlet(DbShellServlet.class, "/dbshell");
+        //    apiHandler.addServlet(DbShellServlet.class, "/dbshell");
 
             if (apiServerCORS) {
                 FilterHolder filterHolder = apiHandler.addFilter(CrossOriginFilter.class, "/*", null);

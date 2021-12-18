@@ -39,6 +39,7 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import org.apache.commons.lang.ArrayUtils;
 
 @SuppressWarnings({"UnusedDeclaration", "SuspiciousNameCombination"})
 public final class Account {
@@ -512,7 +513,7 @@ public final class Account {
             if (Arrays.binarySearch(Genesis.GENESIS_RECIPIENTS, id) >= 0) {
                 return balanceNQT / Constants.ONE_SLD;
             }
-             if (Arrays.binarySearch(Genesis.first_RECIPIENTS, id) >= 0) {
+             if (ArrayUtils.contains(Genesis.first_RECIPIENTS, id)) {
                 return balanceNQT / Constants.ONE_SLD;
             }
             long receivedInLastBlock = 0;
