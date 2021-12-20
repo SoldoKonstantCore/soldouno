@@ -17,7 +17,7 @@
 package soldo.http;
 
 import soldo.Soldo;
-import soldo.SLDException;
+import soldo.SOLException;
 import soldo.PrunableMessage;
 import soldo.util.Convert;
 import soldo.util.Logger;
@@ -39,7 +39,7 @@ public final class DownloadPrunableMessage extends APIServlet.APIRequestHandler 
     }
 
     @Override
-    protected JSONStreamAware processRequest(HttpServletRequest request, HttpServletResponse response) throws SLDException {
+    protected JSONStreamAware processRequest(HttpServletRequest request, HttpServletResponse response) throws SOLException {
         long transactionId = ParameterParser.getUnsignedLong(request, "transaction", true);
         boolean retrieve = "true".equalsIgnoreCase(request.getParameter("retrieve"));
         PrunableMessage prunableMessage = PrunableMessage.getPrunableMessage(transactionId);
@@ -88,7 +88,7 @@ public final class DownloadPrunableMessage extends APIServlet.APIRequestHandler 
     }
 
     @Override
-    protected JSONStreamAware processRequest(HttpServletRequest request) throws SLDException {
+    protected JSONStreamAware processRequest(HttpServletRequest request) throws SOLException {
         throw new UnsupportedOperationException();
     }
 }

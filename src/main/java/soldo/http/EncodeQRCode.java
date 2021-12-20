@@ -23,7 +23,7 @@ import com.google.zxing.WriterException;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
-import soldo.SLDException;
+import soldo.SOLException;
 import soldo.util.Convert;
 import soldo.util.Logger;
 import org.json.simple.JSONObject;
@@ -87,7 +87,7 @@ public final class EncodeQRCode extends APIServlet.APIRequestHandler {
     
     @Override
     protected JSONStreamAware processRequest(HttpServletRequest request)
-            throws SLDException {
+            throws SOLException {
         
         JSONObject response = new JSONObject();
 

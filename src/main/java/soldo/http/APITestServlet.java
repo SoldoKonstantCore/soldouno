@@ -269,7 +269,7 @@ public class APITestServlet extends HttpServlet {
         buf.append("'>\n");
         buf.append("<div class='panel-body'>\n");
         String path = req.getServletPath();
-        String formAction = "/test-proxy".equals(path) ? "/servicesld-proxy" : "/servicesld";
+        String formAction = "/test-proxy".equals(path) ? "/servicesol-proxy" : "/servicesol";
         buf.append("<form action='").append(formAction).append("' method='POST' ");
         if (fileParameter != null) {
             buf.append("enctype='multipart/form-data' ");

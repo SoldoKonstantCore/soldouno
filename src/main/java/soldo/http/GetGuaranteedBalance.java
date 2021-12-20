@@ -18,7 +18,7 @@ package soldo.http;
 
 import soldo.Account;
 import soldo.Soldo;
-import soldo.SLDException;
+import soldo.SOLException;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONStreamAware;
 
@@ -33,7 +33,7 @@ public final class GetGuaranteedBalance extends APIServlet.APIRequestHandler {
     }
 
     @Override
-    protected JSONStreamAware processRequest(HttpServletRequest req) throws SLDException {
+    protected JSONStreamAware processRequest(HttpServletRequest req) throws SOLException {
 
         Account account = ParameterParser.getAccount(req);
         int numberOfConfirmations = ParameterParser.getNumberOfConfirmations(req);

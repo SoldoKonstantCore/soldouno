@@ -16,7 +16,7 @@
 
 package soldo.http;
 
-import soldo.SLDException;
+import soldo.SOLException;
 import soldo.Transaction;
 import soldo.peer.Peers;
 import soldo.util.Convert;
@@ -73,7 +73,7 @@ public final class SendTransaction extends APIServlet.APIRequestHandler {
             Peers.sendToSomePeers(Collections.singletonList(transaction));
             response.put("transaction", transaction.getStringId());
             response.put("fullHash", transaction.getFullHash());
-        } catch (SLDException.ValidationException|RuntimeException e) {
+        } catch (SOLException.ValidationException|RuntimeException e) {
             JSONData.putException(response, e, "Failed to broadcast transaction");
         }
         return response;

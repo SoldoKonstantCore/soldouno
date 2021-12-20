@@ -17,7 +17,7 @@
 package soldo.http;
 
 import soldo.Account;
-import soldo.SLDException;
+import soldo.SOLException;
 import soldo.crypto.Crypto;
 import soldo.util.Convert;
 import org.json.simple.JSONObject;
@@ -34,7 +34,7 @@ public final class GetSharedKey extends APIServlet.APIRequestHandler {
     }
 
     @Override
-    protected JSONStreamAware processRequest(HttpServletRequest req) throws SLDException {
+    protected JSONStreamAware processRequest(HttpServletRequest req) throws SOLException {
 
         String secretPhrase = ParameterParser.getSecretPhrase(req, true);
         byte[] nonce = ParameterParser.getBytes(req, "nonce", true);

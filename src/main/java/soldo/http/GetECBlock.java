@@ -18,7 +18,7 @@ package soldo.http;
 
 import soldo.Block;
 import soldo.Soldo;
-import soldo.SLDException;
+import soldo.SOLException;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONStreamAware;
 
@@ -33,7 +33,7 @@ public final class GetECBlock extends APIServlet.APIRequestHandler {
     }
 
     @Override
-    protected JSONStreamAware processRequest(HttpServletRequest req) throws SLDException {
+    protected JSONStreamAware processRequest(HttpServletRequest req) throws SOLException {
         int timestamp = ParameterParser.getTimestamp(req);
         if (timestamp == 0) {
             timestamp = Soldo.getEpochTime();

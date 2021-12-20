@@ -16,7 +16,7 @@
 
 package soldo.http;
 
-import soldo.SLDException;
+import soldo.SOLException;
 import soldo.Transaction;
 import soldo.crypto.Crypto;
 import soldo.util.Convert;
@@ -53,7 +53,7 @@ public final class CalculateFullHash extends APIServlet.APIRequestHandler {
             digest.update(transaction.getUnsignedBytes());
             byte[] fullHash = digest.digest(Convert.parseHexString(signatureHashString));
             response.put("fullHash", Convert.toHexString(fullHash));
-        } catch (SLDException.NotValidException e) {
+        } catch (SOLException.NotValidException e) {
             JSONData.putException(response, e, "Incorrect unsigned transaction json or bytes");
         }
         return response;

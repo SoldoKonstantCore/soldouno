@@ -16,7 +16,7 @@
 
 package soldo.http;
 
-import soldo.SLDException;
+import soldo.SOLException;
 import soldo.Transaction;
 import soldo.util.Convert;
 import org.json.simple.JSONObject;
@@ -58,7 +58,7 @@ public final class SignTransaction extends APIServlet.APIRequestHandler {
             response.put("transaction", transaction.getStringId());
             response.put("transactionBytes", Convert.toHexString(transaction.getBytes()));
             JSONData.putPrunableAttachment(response, transaction);
-        } catch (SLDException.ValidationException|RuntimeException e) {
+        } catch (SOLException.ValidationException|RuntimeException e) {
             JSONData.putException(response, e, "Incorrect unsigned transaction json or bytes");
         }
         return response;

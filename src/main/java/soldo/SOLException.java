@@ -18,25 +18,25 @@ package soldo;
 
 import java.io.IOException;
 
-public abstract class SLDException extends Exception {
+public abstract class SOLException extends Exception {
 
-    protected SLDException() {
+    protected SOLException() {
         super();
     }
 
-    protected SLDException(String message) {
+    protected SOLException(String message) {
         super(message);
     }
 
-    protected SLDException(String message, Throwable cause) {
+    protected SOLException(String message, Throwable cause) {
         super(message, cause);
     }
 
-    protected SLDException(Throwable cause) {
+    protected SOLException(Throwable cause) {
         super(cause);
     }
 
-    public static abstract class ValidationException extends SLDException {
+    public static abstract class ValidationException extends SOLException {
 
         private ValidationException(String message) {
             super(message);

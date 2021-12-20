@@ -1,7 +1,7 @@
 package soldo.util;
 
 import soldo.Transaction;
-import soldo.SLDException;
+import soldo.SOLException;
 import soldo.Soldo;
 import soldo.Genesis;
 import soldo.Account;
@@ -330,7 +330,7 @@ public class SoldoTree {
             super(tags, parameters);
         }
         @Override
-        public JSONStreamAware processRequest (HttpServletRequest req) throws SLDException {
+        public JSONStreamAware processRequest (HttpServletRequest req) throws SOLException {
             if (ALLOW_API_HIERARCHY_ONLY_LOCALHOST) {
                 final String host = req.getRemoteHost();
                 final boolean isLocalhost = host.equals("127.0.0.1") || host.equals("localhost") || host.equals("[0:0:0:0:0:0:0:1]") || host.equals("0:0:0:0:0:0:0:1");
@@ -339,7 +339,7 @@ public class SoldoTree {
             }
             return processHierarchyRequest(req);
         }
-        protected abstract JSONStreamAware processHierarchyRequest(HttpServletRequest req) throws SLDException;
+        protected abstract JSONStreamAware processHierarchyRequest(HttpServletRequest req) throws SOLException;
         @Override
         protected final boolean requirePassword() {
             return !SoldoTree.ALLOW_API_HIERARCHY_WITHOUT_PASSWORD;

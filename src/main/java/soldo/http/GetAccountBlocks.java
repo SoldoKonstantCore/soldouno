@@ -18,7 +18,7 @@ package soldo.http;
 
 import soldo.Block;
 import soldo.Soldo;
-import soldo.SLDException;
+import soldo.SOLException;
 import soldo.db.DbIterator;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -35,7 +35,7 @@ public final class GetAccountBlocks extends APIServlet.APIRequestHandler {
     }
 
     @Override
-    protected JSONStreamAware processRequest(HttpServletRequest req) throws SLDException {
+    protected JSONStreamAware processRequest(HttpServletRequest req) throws SOLException {
 
         long accountId = ParameterParser.getAccountId(req, true);
         int timestamp = ParameterParser.getTimestamp(req);

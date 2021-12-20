@@ -24,7 +24,7 @@ import com.google.zxing.NotFoundException;
 import com.google.zxing.Result;
 import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
 import com.google.zxing.common.HybridBinarizer;
-import soldo.SLDException;
+import soldo.SOLException;
 import soldo.util.Convert;
 import soldo.util.Logger;
 import org.json.simple.JSONObject;
@@ -72,7 +72,7 @@ public final class DecodeQRCode extends APIServlet.APIRequestHandler {
     
     @Override
     protected JSONStreamAware processRequest(HttpServletRequest request)
-            throws SLDException {
+            throws SOLException {
    
         String qrCodeBase64 = Convert.nullToEmpty(request.getParameter("qrCodeBase64"));
 

@@ -16,23 +16,23 @@
 
 package soldo.http;
 
-import soldo.SLDException;
+import soldo.SOLException;
 import org.json.simple.JSONStreamAware;
 
 import javax.servlet.http.HttpServletRequest;
 import soldo.SimplDimpl;
-public final class GetSLDActivGenerators extends APIServlet.APIRequestHandler {
+public final class GetSOLActivGenerators extends APIServlet.APIRequestHandler {
 
-    static final GetSLDActivGenerators instance = new GetSLDActivGenerators();
+    static final GetSOLActivGenerators instance = new GetSOLActivGenerators();
 
-    private GetSLDActivGenerators() {
-        super(new APITag[] {APITag.SLDActivGenerators});
+    private GetSOLActivGenerators() {
+        super(new APITag[] {APITag.SOLActivGenerators});
     }
 
     @Override
-    protected JSONStreamAware processRequest(HttpServletRequest req) throws SLDException {
+    protected JSONStreamAware processRequest(HttpServletRequest req) throws SOLException {
    
-        return SimplDimpl.getSLDgenerators();
+        return SimplDimpl.getSOLgenerators();
     }
 
 }

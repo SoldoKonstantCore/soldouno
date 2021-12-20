@@ -22,7 +22,7 @@ import soldo.Appendix;
 import soldo.Constants;
 import soldo.HoldingType;
 import soldo.Soldo;
-import soldo.SLDException;
+import soldo.SOLException;
 import soldo.Transaction;
 import soldo.crypto.Crypto;
 import soldo.crypto.EncryptedData;
@@ -482,7 +482,7 @@ public final class ParameterParser {
             try {
                 JSONObject json = (JSONObject) JSONValue.parseWithException(transactionJSON);
                 return Soldo.newTransactionBuilder(json);
-            } catch (SLDException.ValidationException | RuntimeException | ParseException e) {
+            } catch (SOLException.ValidationException | RuntimeException | ParseException e) {
                 Logger.logDebugMessage(e.getMessage(), e);
                 JSONObject response = new JSONObject();
                 JSONData.putException(response, e, "Incorrect transactionJSON");
@@ -493,7 +493,7 @@ public final class ParameterParser {
                 byte[] bytes = Convert.parseHexString(transactionBytes);
                 JSONObject prunableAttachments = prunableAttachmentJSON == null ? null : (JSONObject)JSONValue.parseWithException(prunableAttachmentJSON);
                 return Soldo.newTransactionBuilder(bytes, prunableAttachments);
-            } catch (SLDException.ValidationException|RuntimeException | ParseException e) {
+            } catch (SOLException.ValidationException|RuntimeException | ParseException e) {
                 Logger.logDebugMessage(e.getMessage(), e);
                 JSONObject response = new JSONObject();
                 JSONData.putException(response, e, "Incorrect transactionBytes");

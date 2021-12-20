@@ -17,7 +17,7 @@
 package soldo.http;
 
 import soldo.Account;
-import soldo.SLDException;
+import soldo.SOLException;
 import soldo.db.DbIterator;
 import soldo.util.Convert;
 import org.json.simple.JSONArray;
@@ -35,7 +35,7 @@ public final class GetAccount extends APIServlet.APIRequestHandler {
     }
 
     @Override
-    protected JSONStreamAware processRequest(HttpServletRequest req) throws SLDException {
+    protected JSONStreamAware processRequest(HttpServletRequest req) throws SOLException {
 
         Account account = ParameterParser.getAccount(req);
         boolean includeEffectiveBalance = "true".equalsIgnoreCase(req.getParameter("includeEffectiveBalance"));

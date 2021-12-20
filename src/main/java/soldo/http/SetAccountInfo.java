@@ -19,7 +19,7 @@ package soldo.http;
 import soldo.Account;
 import soldo.Attachment;
 import soldo.Constants;
-import soldo.SLDException;
+import soldo.SOLException;
 import soldo.util.Convert;
 import org.json.simple.JSONStreamAware;
 
@@ -37,7 +37,7 @@ public final class SetAccountInfo extends CreateTransaction {
     }
 
     @Override
-    protected JSONStreamAware processRequest(HttpServletRequest req) throws SLDException {
+    protected JSONStreamAware processRequest(HttpServletRequest req) throws SOLException {
 
         String name = Convert.nullToEmpty(req.getParameter("name")).trim();
         String description = Convert.nullToEmpty(req.getParameter("description")).trim();

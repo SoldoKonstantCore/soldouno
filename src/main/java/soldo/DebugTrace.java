@@ -215,7 +215,7 @@ public final class DebugTrace {
         long totalBackFees = 0;
 
         Map<String, String> map = getValues(accountId, false);
-        map.put("effective balance", String.valueOf(Account.getAccount(accountId).getEffectiveBalanceSLD()));
+        map.put("effective balance", String.valueOf(Account.getAccount(accountId).getEffectiveBalanceSOL()));
         map.put("generation fee", String.valueOf(fee - totalBackFees));
         map.put("block", block.getStringId());
         map.put("event", "block");

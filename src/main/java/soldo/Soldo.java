@@ -57,7 +57,7 @@ public final class Soldo {
 
     public static final String MINIMAL_COMPATIBLE_VERSION = "0.0.0.1"; 
     public static final String VERSION = "0.0.0.1";
-    public static final String APPLICATION = "SLD";
+    public static final String APPLICATION = "SOL";
 
     private static volatile Time time = new Time.EpochTime();
 
@@ -297,15 +297,15 @@ public final class Soldo {
         return new TransactionImpl.BuilderImpl((byte) 1, senderPublicKey, amountNQT, feeNQT, deadline, (Attachment.AbstractAttachment) attachment);
     }
 
-    public static Transaction.Builder newTransactionBuilder(byte[] transactionBytes) throws SLDException.NotValidException {
+    public static Transaction.Builder newTransactionBuilder(byte[] transactionBytes) throws SOLException.NotValidException {
         return TransactionImpl.newTransactionBuilder(transactionBytes);
     }
 
-    public static Transaction.Builder newTransactionBuilder(JSONObject transactionJSON) throws SLDException.NotValidException {
+    public static Transaction.Builder newTransactionBuilder(JSONObject transactionJSON) throws SOLException.NotValidException {
         return TransactionImpl.newTransactionBuilder(transactionJSON);
     }
 
-    public static Transaction.Builder newTransactionBuilder(byte[] transactionBytes, JSONObject prunableAttachments) throws SLDException.NotValidException {
+    public static Transaction.Builder newTransactionBuilder(byte[] transactionBytes, JSONObject prunableAttachments) throws SOLException.NotValidException {
         return TransactionImpl.newTransactionBuilder(transactionBytes, prunableAttachments);
     }
 

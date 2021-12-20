@@ -16,7 +16,7 @@
 
 package soldo.http;
 
-import soldo.SLDException;
+import soldo.SOLException;
 import soldo.http.APIServlet.APIRequestHandler;
 import soldo.peer.Peer;
 import soldo.peer.Peers;
@@ -38,7 +38,7 @@ public class BlacklistPeer extends APIRequestHandler {
 
     @Override
     protected JSONStreamAware processRequest(HttpServletRequest request)
-            throws SLDException {
+            throws SOLException {
         JSONObject response = new JSONObject();
         
         String peerAddress = request.getParameter("peer");

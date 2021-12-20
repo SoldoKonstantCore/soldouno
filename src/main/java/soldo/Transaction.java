@@ -47,9 +47,9 @@ public interface Transaction {
 
         Builder ecBlockId(long blockId);
 
-        Transaction build() throws SLDException.NotValidException;
+        Transaction build() throws SOLException.NotValidException;
 
-        Transaction build(String secretPhrase) throws SLDException.NotValidException;
+        Transaction build(String secretPhrase) throws SOLException.NotValidException;
 
     }
 
@@ -95,7 +95,7 @@ public interface Transaction {
 
     boolean verifySignature();
 
-    void validate() throws SLDException.ValidationException;
+    void validate() throws SOLException.ValidationException;
 
     byte[] getBytes();
 

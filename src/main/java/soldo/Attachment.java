@@ -47,7 +47,7 @@ public interface Attachment extends Appendix {
         }
 
         @Override
-        final void validate(Transaction transaction) throws SLDException.ValidationException {
+        final void validate(Transaction transaction) throws SOLException.ValidationException {
             getTransactionType().validateAttachment(transaction);
         }
 
@@ -126,7 +126,7 @@ public interface Attachment extends Appendix {
         private final String aliasName;
         private final String aliasURI;
 
-        MessagingAliasAssignment(ByteBuffer buffer, byte transactionVersion) throws SLDException.NotValidException {
+        MessagingAliasAssignment(ByteBuffer buffer, byte transactionVersion) throws SOLException.NotValidException {
             super(buffer, transactionVersion);
             aliasName = Convert.readString(buffer, buffer.get(), Constants.MAX_ALIAS_LENGTH).trim();
             aliasURI = Convert.readString(buffer, buffer.getShort(), Constants.MAX_ALIAS_URI_LENGTH).trim();
@@ -182,7 +182,7 @@ public interface Attachment extends Appendix {
 
         private final String aliasName;
 
-        MessagingAliasDelete(final ByteBuffer buffer, final byte transactionVersion) throws SLDException.NotValidException {
+        MessagingAliasDelete(final ByteBuffer buffer, final byte transactionVersion) throws SOLException.NotValidException {
             super(buffer, transactionVersion);
             this.aliasName = Convert.readString(buffer, buffer.get(), Constants.MAX_ALIAS_LENGTH);
         }
@@ -228,7 +228,7 @@ public interface Attachment extends Appendix {
         private final String name;
         private final String description;
 
-        MessagingAccountInfo(ByteBuffer buffer, byte transactionVersion) throws SLDException.NotValidException {
+        MessagingAccountInfo(ByteBuffer buffer, byte transactionVersion) throws SOLException.NotValidException {
             super(buffer, transactionVersion);
             this.name = Convert.readString(buffer, buffer.get(), Constants.MAX_ACCOUNT_NAME_LENGTH);
             this.description = Convert.readString(buffer, buffer.getShort(), Constants.MAX_ACCOUNT_DESCRIPTION_LENGTH);

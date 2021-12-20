@@ -36,14 +36,14 @@ public final class Constants {
     
     
     public static final int MAX_TRANSACTION_PAYLOAD_LENGTH = 1536;
-    public static final long MAX_BALANCE_SLD = 15000000000L;
+    public static final long MAX_BALANCE_SOL = 15000000000L;
     public static final long OKON4ATELNAYA_EMISSIA = 150000000000L; 
-    public static final long ONE_SLD = 1000000L; 
-    public static final long MAX_BALANCE_centesimo = MAX_BALANCE_SLD * ONE_SLD;
-    public static final long MAX_full_BALANCE_centesimo = OKON4ATELNAYA_EMISSIA* ONE_SLD;
+    public static final long ONE_SOL = 1000000L; 
+    public static final long MAX_BALANCE_centesimo = MAX_BALANCE_SOL * ONE_SOL;
+    public static final long MAX_full_BALANCE_centesimo = OKON4ATELNAYA_EMISSIA* ONE_SOL;
     
      public static final int BLOCK_TIME = 60;
-    public static final long INITIAL_BASE_TARGET = BigInteger.valueOf(2).pow(63).divide(BigInteger.valueOf(BLOCK_TIME * MAX_BALANCE_SLD)).longValue(); //153722867;
+    public static final long INITIAL_BASE_TARGET = BigInteger.valueOf(2).pow(63).divide(BigInteger.valueOf(BLOCK_TIME * MAX_BALANCE_SOL)).longValue(); //153722867;
     
 
 public static final int fasterer_GENERACII_BLOCKOV = 1;
@@ -55,7 +55,7 @@ public static final int BASE_TARGET_GAMMA = 72;
   
 public static long getMAX_BASE_TARGET(int height) {
 
-        long max= getINITIAL_BASE_TARGET( height)* ( (Account.getAccount(Genesis.CREATOR_ID).getBalanceNQT()*(-1)/ONE_SLD) /100);
+        long max= getINITIAL_BASE_TARGET( height)* ( (Account.getAccount(Genesis.CREATOR_ID).getBalanceNQT()*(-1)/ONE_SOL) /100);
         return  max;
 }
 public static long getMIN_BASE_TARGET(int height) {
@@ -80,7 +80,7 @@ public static long getMIN_BASE_TARGET(int height) {
     public static final int TRIM_FREQUENCY = Math.max(Soldo.getIntProperty("soldo.trimFrequency"), 1);
     public static final int GUARANTEED_BALANCE_CONFIRMATIONS = isTestnet ? Soldo.getIntProperty("soldo.testnetGuaranteedBalanceConfirmations", 1440) : 770;
     public static final int LEASING_DELAY = isTestnet ? Soldo.getIntProperty("soldo.testnetLeasingDelay", 1440) : 1440;
-    public static final long MIN_FORGING_BALANCE_NQT = 1000 * ONE_SLD;
+    public static final long MIN_FORGING_BALANCE_NQT = 1000 * ONE_SOL;
 
     public static final int MAX_TIMEDRIFT = 15; 
 
@@ -203,7 +203,7 @@ public static long getMIN_BASE_TARGET(int height) {
     public static long getINITIAL_BASE_TARGET(int height) {
         if(height<1)return INITIAL_BASE_TARGET;
 
-        long IBT = BigInteger.valueOf(2).pow(63).divide(BigInteger.valueOf(BLOCK_TIME * (Account.getAccount(Genesis.CREATOR_ID).getBalanceNQT()*(-1)/ONE_SLD) )).longValue();
+        long IBT = BigInteger.valueOf(2).pow(63).divide(BigInteger.valueOf(BLOCK_TIME * (Account.getAccount(Genesis.CREATOR_ID).getBalanceNQT()*(-1)/ONE_SOL) )).longValue();
         return IBT;
     }
 

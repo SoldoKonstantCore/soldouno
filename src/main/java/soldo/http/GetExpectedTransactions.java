@@ -17,7 +17,7 @@
 package soldo.http;
 
 import soldo.Soldo;
-import soldo.SLDException;
+import soldo.SOLException;
 import soldo.Transaction;
 import soldo.util.Convert;
 import soldo.util.Filter;
@@ -38,7 +38,7 @@ public final class GetExpectedTransactions extends APIServlet.APIRequestHandler 
     }
 
     @Override
-    protected JSONStreamAware processRequest(HttpServletRequest req) throws SLDException {
+    protected JSONStreamAware processRequest(HttpServletRequest req) throws SOLException {
 
         Set<Long> accountIds = Convert.toSet(ParameterParser.getAccountIds(req, false));
         Filter<Transaction> filter = accountIds.isEmpty() ? transaction -> true :

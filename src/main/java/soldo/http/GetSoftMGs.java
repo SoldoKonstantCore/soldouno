@@ -17,7 +17,7 @@
 package soldo.http;
 
 import soldo.Soldo;
-import soldo.SLDException;
+import soldo.SOLException;
 import org.json.simple.JSONStreamAware;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,11 +31,11 @@ public final class GetSoftMGs extends APIServlet.APIRequestHandler {
     }
 
     @Override
-    protected JSONStreamAware processRequest(HttpServletRequest req) throws SLDException {
+    protected JSONStreamAware processRequest(HttpServletRequest req) throws SOLException {
         long accountId = ParameterParser.getAccountId(req, true);
         
         SoftMGs metrics = Soldo.softMG().getMetrics(accountId);
-        return JSONData.accountSLDmg(metrics,accountId);
+        return JSONData.accountSOLmg(metrics,accountId);
     }
 
 }

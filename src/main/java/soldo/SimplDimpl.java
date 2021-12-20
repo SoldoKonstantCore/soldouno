@@ -21,10 +21,11 @@ import soldo.util.Logger;
  */
 public class SimplDimpl {
     
-    public static JSONObject getSLDgenerators(){
+    public static JSONObject getSOLgenerators(){
         Block lastBlock = Soldo.getBlockchain().getLastBlock();
         int _height = lastBlock.getHeight();
-        Set<Long> list_gen = BlockDb.getBlockGenerators(Math.max(1, _height - 10000));
+        Set<Long> list_gen = BlockDb.getBlockGenerators(Math.max(1, ((_height>15000)?(_height-10000):(10) )) );
+        
         JSONObject json_list = new JSONObject();
         try {
         HashMap<Long,JSONObject> hm = new HashMap<>(); 
@@ -33,7 +34,8 @@ public class SimplDimpl {
            JSONObject json_ = new JSONObject();
             Long ac_ID = iterator.next();
             String rs = Convert.rsAccount(ac_ID);
-            long _effectBL = Account.getAccount(ac_ID).getEffectiveBalanceSLD(_height);
+            long _effectBL = Account.getAccount(ac_ID).getEffectiveBalanceSOL(_height);
+             if(_effectBL<1)continue;
             json_.put("rs", rs); 
             json_.put("id", ac_ID);
             json_.put("effectBalans", _effectBL);
@@ -45,7 +47,7 @@ public class SimplDimpl {
                 json_list.put(++a, entry.getValue() );
             }
          } catch (Exception e) {
-             Logger.logErrorMessage("Failed to get SLD generators  " , e);
+             Logger.logErrorMessage("Failed to get SOL generators  " , e);
         }
         return json_list;
     }

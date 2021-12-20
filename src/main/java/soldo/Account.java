@@ -495,11 +495,11 @@ public final class Account {
         return forgedBalanceNQT;
     }
 
-    public long getEffectiveBalanceSLD() {
-        return getEffectiveBalanceSLD(Soldo.getBlockchain().getHeight());
+    public long getEffectiveBalanceSOL() {
+        return getEffectiveBalanceSOL(Soldo.getBlockchain().getHeight());
     }
 
-    public long getEffectiveBalanceSLD(int height) {
+    public long getEffectiveBalanceSOL(int height) {
         if (height >= Constants.FORBID_FORGING_WITH_YOUNG_PUBLIC_KEY) {
             
             if (this.publicKey == null) {
@@ -511,10 +511,10 @@ public final class Account {
         }
         if (height < Constants.TRANSPARENT_FORGING_BLOCK_3) {
             if (Arrays.binarySearch(Genesis.GENESIS_RECIPIENTS, id) >= 0) {
-                return balanceNQT / Constants.ONE_SLD;
+                return balanceNQT / Constants.ONE_SOL;
             }
              if (ArrayUtils.contains(Genesis.first_RECIPIENTS, id)) {
-                return balanceNQT / Constants.ONE_SLD;
+                return balanceNQT / Constants.ONE_SOL;
             }
             long receivedInLastBlock = 0;
             for (Transaction transaction : Soldo.getBlockchain().getBlockAtHeight(height).getTransactions()) {
@@ -522,12 +522,12 @@ public final class Account {
                     receivedInLastBlock += transaction.getAmountNQT();
                 }
             }
-            return (balanceNQT - receivedInLastBlock) / Constants.ONE_SLD;
+            return (balanceNQT - receivedInLastBlock) / Constants.ONE_SOL;
         }
         Soldo.getBlockchain().readLock();
         try {
             long effectiveBalanceNQT = getGuaranteedBalanceNQT(Constants.GUARANTEED_BALANCE_CONFIRMATIONS, height);
-            return (effectiveBalanceNQT < Constants.MIN_FORGING_BALANCE_NQT) ? 0 : effectiveBalanceNQT / Constants.ONE_SLD;
+            return (effectiveBalanceNQT < Constants.MIN_FORGING_BALANCE_NQT) ? 0 : effectiveBalanceNQT / Constants.ONE_SOL;
         } finally {
             Soldo.getBlockchain().readUnlock();
         }

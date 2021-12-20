@@ -18,7 +18,7 @@ package soldo.http;
 
 import soldo.Appendix;
 import soldo.Soldo;
-import soldo.SLDException;
+import soldo.SOLException;
 import soldo.Transaction;
 import soldo.util.JSON;
 import org.json.simple.JSONObject;
@@ -58,7 +58,7 @@ public final class VerifyPrunableMessage extends APIServlet.APIRequestHandler {
     }
 
     @Override
-    protected JSONStreamAware processRequest(HttpServletRequest req) throws SLDException {
+    protected JSONStreamAware processRequest(HttpServletRequest req) throws SOLException {
 
         long transactionId = ParameterParser.getUnsignedLong(req, "transaction", true);
         Transaction transaction = Soldo.getBlockchain().getTransaction(transactionId);

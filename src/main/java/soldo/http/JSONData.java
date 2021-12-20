@@ -71,14 +71,14 @@ public final class JSONData {
             json.put("unconfirmedBalanceNQT", String.valueOf(account.getUnconfirmedBalanceNQT()));
             json.put("forgedBalanceNQT", String.valueOf(account.getForgedBalanceNQT()));
             if (includeEffectiveBalance) {
-                json.put("effectiveBalanceSoldo", account.getEffectiveBalanceSLD(height));
+                json.put("effectiveBalanceSoldo", account.getEffectiveBalanceSOL(height));
                 json.put("guaranteedBalanceNQT", String.valueOf(account.getGuaranteedBalanceNQT(Constants.GUARANTEED_BALANCE_CONFIRMATIONS, height)));
             }
         }
         return json;
     }
 
-    static JSONObject accountSLDmg(SoftMGs metrics, long accountId) {
+    static JSONObject accountSOLmg(SoftMGs metrics, long accountId) {
         JSONObject json = new JSONObject();
         json.put("balance", String.valueOf(metrics.getBalance()));
         json.put("amount", String.valueOf(metrics.getAmount()));

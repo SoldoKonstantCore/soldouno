@@ -18,7 +18,7 @@ package soldo.http;
 
 import soldo.Transaction;
 import soldo.Soldo;
-import soldo.SLDException;
+import soldo.SOLException;
 import soldo.Constants;
 import soldo.Genesis;
 import soldo.db.DbIterator;
@@ -41,7 +41,7 @@ public final class GetBlockchainTransactions extends APIServlet.APIRequestHandle
     }
 
     @Override
-    protected JSONStreamAware processRequest(HttpServletRequest req) throws SLDException {
+    protected JSONStreamAware processRequest(HttpServletRequest req) throws SOLException {
 
         long accountId = ParameterParser.getAccountId(req, true);
         if (accountId == Genesis.CREATOR_ID) {

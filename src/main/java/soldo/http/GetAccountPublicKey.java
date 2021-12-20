@@ -17,7 +17,7 @@
 package soldo.http;
 
 import soldo.Account;
-import soldo.SLDException;
+import soldo.SOLException;
 import soldo.util.Convert;
 import soldo.util.JSON;
 import org.json.simple.JSONObject;
@@ -34,7 +34,7 @@ public final class GetAccountPublicKey extends APIServlet.APIRequestHandler {
     }
 
     @Override
-    protected JSONStreamAware processRequest(HttpServletRequest req) throws SLDException {
+    protected JSONStreamAware processRequest(HttpServletRequest req) throws SOLException {
 
         long accountId = ParameterParser.getAccountId(req, true);
         byte[] publicKey = Account.getPublicKey(accountId);

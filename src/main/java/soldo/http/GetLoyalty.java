@@ -3,7 +3,7 @@ package soldo.http;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONStreamAware;
 import soldo.Soldo;
-import soldo.SLDException;
+import soldo.SOLException;
 import soldo.Transaction;
 import soldo.db.DbIterator;
 import soldo.util.SoldoTree;
@@ -19,7 +19,7 @@ public class GetLoyalty extends SoldoTree.APIHierarchyRequestHandler {
     }
 
     @Override
-    protected JSONStreamAware processHierarchyRequest(HttpServletRequest req) throws SLDException {
+    protected JSONStreamAware processHierarchyRequest(HttpServletRequest req) throws SOLException {
 
         long child = ParameterParser.getAccountId(req, "accountChild", true);
         long parent = ParameterParser.getAccountId(req, "accountParent", true);

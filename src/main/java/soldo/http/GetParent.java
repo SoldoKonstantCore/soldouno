@@ -4,7 +4,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONStreamAware;
 import soldo.Account;
 import soldo.Soldo;
-import soldo.SLDException;
+import soldo.SOLException;
 import soldo.util.Convert;
 import soldo.util.SoldoTree;
 
@@ -22,7 +22,7 @@ public class GetParent extends SoldoTree.APIHierarchyRequestHandler {
         
     }
     @Override
-    protected JSONStreamAware processHierarchyRequest(HttpServletRequest request) throws SLDException {
+    protected JSONStreamAware processHierarchyRequest(HttpServletRequest request) throws SOLException {
 
         long account = ParameterParser.getAccountId(request, true);
 
@@ -52,7 +52,7 @@ public class GetParent extends SoldoTree.APIHierarchyRequestHandler {
             
             return response;
         } catch (SQLException e) {
-            throw new SLDException.NotValidException (e.getMessage(), e.getCause());
+            throw new SOLException.NotValidException (e.getMessage(), e.getCause());
         }
     }
 }

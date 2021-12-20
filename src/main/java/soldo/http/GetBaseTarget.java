@@ -4,7 +4,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONStreamAware;
 import soldo.Constants;
 import soldo.Soldo;
-import soldo.SLDException;
+import soldo.SOLException;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -17,7 +17,7 @@ public final class GetBaseTarget extends APIServlet.APIRequestHandler {
     }
 
     @Override
-    protected JSONStreamAware processRequest(HttpServletRequest req) throws SLDException {
+    protected JSONStreamAware processRequest(HttpServletRequest req) throws SOLException {
         int height = ParameterParser.getHeight(req);
         if (height < 0 || height > Soldo.getBlockchain().getHeight()) {
             height = Soldo.getBlockchain().getHeight();

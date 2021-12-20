@@ -17,7 +17,7 @@
 package soldo.http;
 
 import soldo.Soldo;
-import soldo.SLDException;
+import soldo.SOLException;
 import soldo.Transaction;
 import soldo.db.DbIterator;
 import org.json.simple.JSONArray;
@@ -35,7 +35,7 @@ public final class GetReferencingTransactions extends APIServlet.APIRequestHandl
     }
 
     @Override
-    protected JSONStreamAware processRequest(HttpServletRequest req) throws SLDException {
+    protected JSONStreamAware processRequest(HttpServletRequest req) throws SOLException {
 
         long transactionId = ParameterParser.getUnsignedLong(req, "transaction", true);
         int firstIndex = ParameterParser.getFirstIndex(req);

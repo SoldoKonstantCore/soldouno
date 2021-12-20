@@ -46,7 +46,7 @@ public interface BlockchainProcessor extends Observable<Block,BlockchainProcesso
 
     int getInitialScanHeight();
 
-    void processPeerBlock(JSONObject request) throws SLDException;
+    void processPeerBlock(JSONObject request) throws SOLException;
 
     void fullReset();
 
@@ -66,7 +66,7 @@ public interface BlockchainProcessor extends Observable<Block,BlockchainProcesso
 
     Transaction restorePrunedTransaction(long transactionId);
 
-    class BlockNotAcceptedException extends SLDException {
+    class BlockNotAcceptedException extends SOLException {
 
         private final BlockImpl block;
 

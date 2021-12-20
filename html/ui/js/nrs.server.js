@@ -94,7 +94,7 @@ var NRS = (function (NRS, $, undefined) {
         //convert SOLDO to NQT...
         var field = "N/A";
         try {
-            var sldFields = [
+            var solFields = [
                 ["feeSOLDO", "feeNQT"],
                 ["amountSOLDO", "amountNQT"],
                 ["priceSOLDO", "priceNQT"],
@@ -111,12 +111,12 @@ var NRS = (function (NRS, $, undefined) {
                 ["monitorThresholdSOLDO", "threshold"]
             ];
 
-            for (i = 0; i < sldFields.length; i++) {
-                var sldField = sldFields[i][0];
-                var nqtField = sldFields[i][1];
-                if (sldField in data) {
-                    data[nqtField] = NRS.convertToNQT(data[sldField]);
-                    delete data[sldField];
+            for (i = 0; i < solFields.length; i++) {
+                var solField = solFields[i][0];
+                var nqtField = solFields[i][1];
+                if (solField in data) {
+                    data[nqtField] = NRS.convertToNQT(data[solField]);
+                    delete data[solField];
                 }
             }
         } catch (err) {
@@ -214,10 +214,10 @@ var NRS = (function (NRS, $, undefined) {
         if (requestType == "getAccountId") {
             accountId = NRS.getAccountId(data.secretPhrase);
 
-            var sldAddress = new SoldoAddress();
+            var solAddress = new SoldoAddress();
             var accountRS = "";
-            if (sldAddress.set(accountId)) {
-                accountRS = sldAddress.toString();
+            if (solAddress.set(accountId)) {
+                accountRS = solAddress.toString();
             }
             callback({
                 "account": accountId,
@@ -271,7 +271,7 @@ var NRS = (function (NRS, $, undefined) {
         }
 
         var type = (NRS.isRequirePost(requestType) || "secretPhrase" in data || "doNotSign" in data || "adminPassword" in data ? "POST" : "GET");
-        var url = NRS.server + "/servicesld?requestType=" + requestType;
+        var url = NRS.server + "/servicesol?requestType=" + requestType;
 
         if (type == "GET") {
             if (typeof data == "string") {
@@ -1485,7 +1485,7 @@ var NRS = (function (NRS, $, undefined) {
 
     NRS.broadcastTransactionBytes = function (transactionData, callback, originalResponse, originalData) {
         $.ajax({
-            url: NRS.server + "/servicesld?requestType=broadcastTransaction",
+            url: NRS.server + "/servicesol?requestType=broadcastTransaction",
             crossDomain: true,
             dataType: "json",
             type: "POST",

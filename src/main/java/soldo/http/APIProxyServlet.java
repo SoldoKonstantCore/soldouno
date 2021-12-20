@@ -174,7 +174,7 @@ public final class APIProxyServlet extends AsyncMiddleManServlet {
             uri = servingPeer.getPeerApiUri();
             clientRequest.setAttribute(REMOTE_SERVER_IDLE_TIMEOUT, servingPeer.getApiServerIdleTimeout());
         }
-        uri.append("/servicesld");
+        uri.append("/servicesol");
         String query = clientRequest.getQueryString();
         if (query != null) {
             uri.append("?").append(query);

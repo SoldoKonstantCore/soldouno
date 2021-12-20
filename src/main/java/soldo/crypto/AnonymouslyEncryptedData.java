@@ -16,7 +16,7 @@
 
 package soldo.crypto;
 
-import soldo.SLDException;
+import soldo.SOLException;
 import soldo.util.Convert;
 
 import java.nio.ByteBuffer;
@@ -35,9 +35,9 @@ public final class AnonymouslyEncryptedData {
     }
 
     public static AnonymouslyEncryptedData readEncryptedData(ByteBuffer buffer, int length, int maxLength)
-            throws SLDException.NotValidException {
+            throws SOLException.NotValidException {
         if (length > maxLength) {
-            throw new SLDException.NotValidException("Max encrypted data length exceeded: " + length);
+            throw new SOLException.NotValidException("Max encrypted data length exceeded: " + length);
         }
         byte[] data = new byte[length];
         buffer.get(data);
@@ -51,7 +51,7 @@ public final class AnonymouslyEncryptedData {
         buffer.order(ByteOrder.LITTLE_ENDIAN);
         try {
             return readEncryptedData(buffer, bytes.length - 32, Integer.MAX_VALUE);
-        } catch (SLDException.NotValidException e) {
+        } catch (SOLException.NotValidException e) {
             throw new RuntimeException(e.toString(), e); // never
         }
     }

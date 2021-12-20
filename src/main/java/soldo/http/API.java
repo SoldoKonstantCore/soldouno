@@ -266,11 +266,11 @@ public final class API {
                 apiHandlers.addHandler(contextHandler);
             }
 
-            ServletHolder servletHolder = apiHandler.addServlet(APIServlet.class, "/servicesld");
+            ServletHolder servletHolder = apiHandler.addServlet(APIServlet.class, "/servicesol");
             servletHolder.getRegistration().setMultipartConfig(new MultipartConfigElement(
                     null, 0, -1L, 0));
 
-            servletHolder = apiHandler.addServlet(APIProxyServlet.class, "/servicesld-proxy");
+            servletHolder = apiHandler.addServlet(APIProxyServlet.class, "/servicesol-proxy");
             servletHolder.setInitParameters(Collections.singletonMap("idleTimeout",
                     "" + Math.max(apiServerIdleTimeout - APIProxyServlet.PROXY_IDLE_TIMEOUT_DELTA, 0)));
             servletHolder.getRegistration().setMultipartConfig(new MultipartConfigElement(
@@ -278,7 +278,7 @@ public final class API {
 
             GzipHandler gzipHandler = new GzipHandler();
             if (!Soldo.getBooleanProperty("soldo.enableAPIServerGZIPFilter", isOpenAPI)) {
-                gzipHandler.setExcludedPaths("/servicesld", "/servicesld-proxy");
+                gzipHandler.setExcludedPaths("/servicesol", "/servicesol-proxy");
             }
             gzipHandler.setIncludedMethods("GET", "POST");
             gzipHandler.setMinGzipSize(soldo.peer.Peers.MIN_COMPRESS_SIZE);

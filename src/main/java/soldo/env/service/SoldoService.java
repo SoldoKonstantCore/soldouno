@@ -19,6 +19,6 @@ package soldo.env.service;
 public class SoldoService {
 
     public static void main(String[] args) {
-        SLDService_ServiceManagement.serviceInit();
+        SOLService_ServiceManagement.serviceInit();
     }
 }

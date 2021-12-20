@@ -20,7 +20,7 @@ import soldo.AccountLedger;
 import soldo.AccountLedger.LedgerEntry;
 import soldo.AccountLedger.LedgerEvent;
 import soldo.AccountLedger.LedgerHolding;
-import soldo.SLDException;
+import soldo.SOLException;
 import soldo.util.Convert;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -237,10 +237,10 @@ public class GetAccountLedger extends APIServlet.APIRequestHandler {
      *
      * @param   req                 API request
      * @return                      API response
-     * @throws  SLDException        Invalid request
+     * @throws  SOLException        Invalid request
      */
     @Override
-    protected JSONStreamAware processRequest(HttpServletRequest req) throws SLDException {
+    protected JSONStreamAware processRequest(HttpServletRequest req) throws SOLException {
         //
         // Process the request parameters
         //

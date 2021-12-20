@@ -130,9 +130,9 @@ var NRS = (function (NRS, $) {
 					try {
 						options.publicKey = converters.hexStringToByteArray(NRS.getPublicKey(options.account, true));
 					} catch (err) {
-						var sldAddress = new SoldoAddress();
+						var solAddress = new SoldoAddress();
 
-						if (!sldAddress.set(options.account)) {
+						if (!solAddress.set(options.account)) {
 							throw {
 								"message": $.t("error_invalid_account_id"),
 								"errorCode": 3

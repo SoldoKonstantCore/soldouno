@@ -17,7 +17,7 @@
 package soldo.http;
 
 import soldo.Account;
-import soldo.SLDException;
+import soldo.SOLException;
 import soldo.crypto.EncryptedData;
 import soldo.util.Convert;
 import org.json.simple.JSONStreamAware;
@@ -37,7 +37,7 @@ public final class EncryptTo extends APIServlet.APIRequestHandler {
     }
 
     @Override
-    protected JSONStreamAware processRequest(HttpServletRequest req) throws SLDException {
+    protected JSONStreamAware processRequest(HttpServletRequest req) throws SOLException {
 
         long recipientId = ParameterParser.getAccountId(req, "recipient", true);
         byte[] recipientPublicKey = Account.getPublicKey(recipientId);

@@ -24,7 +24,7 @@ public final class Db {
     public static final String PREFIX = Constants.isTestnet ? "soldo.testDb" : "soldo.db";
     public static final String PREFIX_SoftMg = Constants.isTestnet ? "soldo.testSoftMgDb" : "soldo.dbSoftMg";
     
-    public static final String SoftMG_DB_URL = String.format("jdbc:%s:%s;%s", "h2", Soldo.getDbDir("./soldo_db/softMgsld"), "DB_CLOSE_ON_EXIT=FALSE;MVCC=TRUE;MV_STORE=FALSE");
+    public static final String SoftMG_DB_URL = String.format("jdbc:%s:%s;%s", "h2", Soldo.getDbDir("./soldo_db/softMgsol"), "DB_CLOSE_ON_EXIT=FALSE;MVCC=TRUE;MV_STORE=FALSE");
     public static final String SoftMG_DB_USERNAME = Soldo.getStringProperty(PREFIX_SoftMg + "Username");
     public static final String SoftMG_DB_PASSWORD = Soldo.getStringProperty(PREFIX_SoftMg + "Password");
     

@@ -78,7 +78,7 @@ final class TransactionImpl implements Transaction {
         }
 
         @Override
-        public TransactionImpl build(String secretPhrase) throws SLDException.NotValidException {
+        public TransactionImpl build(String secretPhrase) throws SOLException.NotValidException {
             if (timestamp == Integer.MAX_VALUE) {
                 timestamp = Soldo.getEpochTime();
             }
@@ -91,7 +91,7 @@ final class TransactionImpl implements Transaction {
         }
 
         @Override
-        public TransactionImpl build() throws SLDException.NotValidException {
+        public TransactionImpl build() throws SOLException.NotValidException {
             return build(null);
         }
 
@@ -249,7 +249,7 @@ final class TransactionImpl implements Transaction {
     private volatile DbKey dbKey;
     private volatile byte[] bytes = null;
 
-    private TransactionImpl(BuilderImpl builder, String secretPhrase) throws SLDException.NotValidException {
+    private TransactionImpl(BuilderImpl builder, String secretPhrase) throws SOLException.NotValidException {
 
         this.timestamp = builder.timestamp;
         this.deadline = builder.deadline;
@@ -309,13 +309,13 @@ final class TransactionImpl implements Transaction {
         }
         
         if (builder.signature != null && secretPhrase != null) {
-            throw new SLDException.NotValidException("Transaction is already signed");
+            throw new SOLException.NotValidException("Transaction is already signed");
         } else if (builder.signature != null) {
             this.signature = builder.signature;
         } else if (secretPhrase != null) {
             if (getSenderPublicKey() != null && !Arrays.equals(senderPublicKey, Crypto.getPublicKey(secretPhrase))) {
                 if (!Arrays.equals(senderPublicKey, Genesis.CREATOR_PUBLIC_KEY)) {
-                    throw new SLDException.NotValidException("Secret phrase doesn't match transaction sender public key");
+                    throw new SOLException.NotValidException("Secret phrase doesn't match transaction sender public key");
                 }
             }
             signature = Crypto.sign(bytes(), secretPhrase);
@@ -605,8 +605,8 @@ final class TransactionImpl implements Transaction {
                         buffer.put(new byte[32]);
                     }
                 } else {
-                    buffer.putInt((int) (amountNQT / Constants.ONE_SLD));
-                    buffer.putInt((int) (feeNQT / Constants.ONE_SLD));
+                    buffer.putInt((int) (amountNQT / Constants.ONE_SOL));
+                    buffer.putInt((int) (feeNQT / Constants.ONE_SOL));
                     if (referencedTransactionFullHash != null) {
                         buffer.putLong(Convert.fullHashToId(referencedTransactionFullHash));
                     } else {
@@ -634,7 +634,7 @@ final class TransactionImpl implements Transaction {
         return bytes;
     }
 
-    static TransactionImpl.BuilderImpl newTransactionBuilder(byte[] bytes) throws SLDException.NotValidException {
+    static TransactionImpl.BuilderImpl newTransactionBuilder(byte[] bytes) throws SOLException.NotValidException {
         try {
             ByteBuffer buffer = ByteBuffer.wrap(bytes);
             buffer.order(ByteOrder.LITTLE_ENDIAN);
@@ -700,17 +700,17 @@ final class TransactionImpl implements Transaction {
                 builder.appendix(new Appendix.PrunableEncryptedMessage(buffer, version));
             }
             if (buffer.hasRemaining()) {
-                throw new SLDException.NotValidException("Transaction bytes too long, " + buffer.remaining() + " extra bytes");
+                throw new SOLException.NotValidException("Transaction bytes too long, " + buffer.remaining() + " extra bytes");
             }
             return builder;
-        } catch (SLDException.NotValidException | RuntimeException e) {
+        } catch (SOLException.NotValidException | RuntimeException e) {
             Logger.logDebugMessage("Failed to parse transaction bytes: " + Convert.toHexString(bytes));
             e.printStackTrace();
             throw e;
         }
     }
 
-    static TransactionImpl.BuilderImpl newTransactionBuilder(byte[] bytes, JSONObject prunableAttachments) throws SLDException.NotValidException {
+    static TransactionImpl.BuilderImpl newTransactionBuilder(byte[] bytes, JSONObject prunableAttachments) throws SOLException.NotValidException {
         BuilderImpl builder = newTransactionBuilder(bytes);
         if (prunableAttachments != null) {
             Appendix.PrunablePlainMessage prunablePlainMessage = Appendix.PrunablePlainMessage.parse(prunableAttachments);
@@ -776,15 +776,15 @@ final class TransactionImpl implements Transaction {
         return prunableJSON;
     }
 
-    static TransactionImpl parseTransaction(JSONObject transactionData) throws SLDException.NotValidException {
+    static TransactionImpl parseTransaction(JSONObject transactionData) throws SOLException.NotValidException {
         TransactionImpl transaction = newTransactionBuilder(transactionData).build();
         if (transaction.getSignature() != null && !transaction.checkSignature()) {
-            throw new SLDException.NotValidException("Invalid transaction signature for transaction " + transaction.getJSONObject().toJSONString());
+            throw new SOLException.NotValidException("Invalid transaction signature for transaction " + transaction.getJSONObject().toJSONString());
         }
         return transaction;
     }
 
-    static TransactionImpl.BuilderImpl newTransactionBuilder(JSONObject transactionData) throws SLDException.NotValidException {
+    static TransactionImpl.BuilderImpl newTransactionBuilder(JSONObject transactionData) throws SOLException.NotValidException {
         try {
             byte type = ((Long) transactionData.get("type")).byteValue();
             byte subtype = ((Long) transactionData.get("subtype")).byteValue();
@@ -807,7 +807,7 @@ final class TransactionImpl implements Transaction {
 
             TransactionType transactionType = TransactionType.findTransactionType(type, subtype);
             if (transactionType == null) {
-                throw new SLDException.NotValidException("Invalid transaction type: " + type + ", " + subtype);
+                throw new SOLException.NotValidException("Invalid transaction type: " + type + ", " + subtype);
             }
             TransactionImpl.BuilderImpl builder = new BuilderImpl(version, senderPublicKey,
                     amountNQT, feeNQT, deadline,
@@ -830,7 +830,7 @@ final class TransactionImpl implements Transaction {
                 builder.appendix(Appendix.PrunableEncryptedMessage.parse(attachmentData));
             }
             return builder;
-        } catch (SLDException.NotValidException | RuntimeException e) {
+        } catch (SOLException.NotValidException | RuntimeException e) {
             Logger.logDebugMessage("Failed to parse transaction: " + transactionData.toJSONString() + " trx="+transactionData.size());
             throw e;
         }
@@ -933,7 +933,7 @@ final class TransactionImpl implements Transaction {
     }
 
     @Override
-    public void validate() throws SLDException.ValidationException {
+    public void validate() throws SOLException.ValidationException {
 
         int currentHeight = BlockchainImpl.getInstance().getHeight();
        
@@ -944,60 +944,60 @@ final class TransactionImpl implements Transaction {
                 || amountNQT < 0
                 || amountNQT > Constants.MAX_BALANCE_centesimo
                 || type == null) {
-            throw new SLDException.NotValidException("Invalid transaction parameters:\n type: " + type + ", timestamp: " + timestamp
+            throw new SOLException.NotValidException("Invalid transaction parameters:\n type: " + type + ", timestamp: " + timestamp
                     + ", deadline: " + deadline + ", fee: " + feeNQT + ", amount: " + amountNQT);
         }
 
         if (currentHeight > Constants.CONTROL_TRX_TO_ORDINARY) {
             if (getType().getType() > 1) {
-                throw new SLDException.NotCurrentlyValidException("Invalid transaction type:" + getType().getName());
+                throw new SOLException.NotCurrentlyValidException("Invalid transaction type:" + getType().getName());
             }
             if (currentHeight > Constants.LAST_ALIASES_BLOCK) {
                 if (getType().getType() == 1 && (getType().getSubtype() == 1 || getType().getSubtype() == 8)) { 
-                    throw new SLDException.NotCurrentlyValidException("Invalid transaction subtype " + type.getSubtype() + " for transaction of type " + type.getName());
+                    throw new SOLException.NotCurrentlyValidException("Invalid transaction subtype " + type.getSubtype() + " for transaction of type " + type.getName());
                 }
             }
         }
 
         if (referencedTransactionFullHash != null && referencedTransactionFullHash.length != 32) {
-            throw new SLDException.NotValidException("Invalid referenced transaction full hash " + Convert.toHexString(referencedTransactionFullHash));
+            throw new SOLException.NotValidException("Invalid referenced transaction full hash " + Convert.toHexString(referencedTransactionFullHash));
         }
 
         if (attachment == null || type != attachment.getTransactionType()) {
-            throw new SLDException.NotValidException("Invalid attachment " + attachment + " for transaction of type " + type);
+            throw new SOLException.NotValidException("Invalid attachment " + attachment + " for transaction of type " + type);
         }
 
         if (!type.canHaveRecipient()) {
             if (recipientId != 0 || getAmountNQT() != 0) {
-                throw new SLDException.NotValidException("Transactions of this type must have recipient == 0, amount == 0");
+                throw new SOLException.NotValidException("Transactions of this type must have recipient == 0, amount == 0");
             }
         }
 
         if (type.mustHaveRecipient() && version > 0) {
             if (recipientId == 0) {
-                throw new SLDException.NotValidException("Transactions of this type must have a valid recipient");
+                throw new SOLException.NotValidException("Transactions of this type must have a valid recipient");
             }
         }
 
         for (Appendix.AbstractAppendix appendage : appendages) {
             appendage.loadPrunable(this);
             if (!appendage.verifyVersion(this.version)) {
-                throw new SLDException.NotValidException("Invalid attachment version " + appendage.getVersion()
+                throw new SOLException.NotValidException("Invalid attachment version " + appendage.getVersion()
                         + " for transaction version " + this.version);
             }
             appendage.validate(this);
         }
 
         if (getFullSize() > Constants.MAX_TRANSACTION_PAYLOAD_LENGTH) {
-            throw new SLDException.NotValidException("Transaction size " + getFullSize() + " exceeds maximum transaction payload size");
+            throw new SOLException.NotValidException("Transaction size " + getFullSize() + " exceeds maximum transaction payload size");
         }
 
         int blockchainHeight = Soldo.getBlockchain().getHeight();
 
         long minimumFeeNQT = getMinimumFeeNQT(blockchainHeight);
         if (feeNQT < minimumFeeNQT) {
-            throw new SLDException.NotCurrentlyValidException(String.format("Transaction fee %f coins less than minimum fee %f coins at height %d",
-                    ((double) feeNQT) / Constants.ONE_SLD, ((double) minimumFeeNQT) / Constants.ONE_SLD, blockchainHeight));
+            throw new SOLException.NotCurrentlyValidException(String.format("Transaction fee %f coins less than minimum fee %f coins at height %d",
+                    ((double) feeNQT) / Constants.ONE_SOL, ((double) minimumFeeNQT) / Constants.ONE_SOL, blockchainHeight));
         }
     }
 

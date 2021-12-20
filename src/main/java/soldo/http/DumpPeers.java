@@ -45,7 +45,7 @@ public final class DumpPeers extends APIServlet.APIRequestHandler {
     protected JSONStreamAware processRequest(HttpServletRequest req) throws ParameterException {
 
         String version = Convert.nullToEmpty(req.getParameter("version"));
-        int weight = ParameterParser.getInt(req, "weight", 0, (int)Constants.MAX_BALANCE_SLD, false);
+        int weight = ParameterParser.getInt(req, "weight", 0, (int)Constants.MAX_BALANCE_SOL, false);
         boolean connect = "true".equalsIgnoreCase(req.getParameter("connect")) && API.checkPassword(req);
         if (connect) {
             List<Callable<Object>> connects = new ArrayList<>();

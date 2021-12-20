@@ -16,10 +16,10 @@
 
 package soldo.http;
 
-import soldo.SLDException;
+import soldo.SOLException;
 import org.json.simple.JSONStreamAware;
 
-public final class ParameterException extends SLDException {
+public final class ParameterException extends SOLException {
 
     private final JSONStreamAware errorResponse;
 

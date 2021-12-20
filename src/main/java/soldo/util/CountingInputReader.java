@@ -16,7 +16,7 @@
 
 package soldo.util;
 
-import soldo.SLDException.SoldoIOException;
+import soldo.SOLException.SoldoIOException;
 
 import java.io.FilterReader;
 import java.io.IOException;

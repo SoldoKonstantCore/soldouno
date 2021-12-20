@@ -261,7 +261,7 @@ final class TransactionProcessorImpl implements TransactionProcessor {
                 }
                 try {
                     processPeerTransactions(transactionsData);
-                } catch (SLDException.ValidationException|RuntimeException e) {
+                } catch (SOLException.ValidationException|RuntimeException e) {
                     peer.blacklist(e);
                 }
             } catch (Exception e) {
@@ -402,7 +402,7 @@ final class TransactionProcessorImpl implements TransactionProcessor {
     }
 
     @Override
-    public void broadcast(Transaction transaction) throws SLDException.ValidationException {
+    public void broadcast(Transaction transaction) throws SOLException.ValidationException {
         BlockchainImpl.getInstance().writeLock();
         int height = BlockchainImpl.getInstance().getHeight();
 
@@ -448,7 +448,7 @@ final class TransactionProcessorImpl implements TransactionProcessor {
     }
 
     @Override
-    public void processPeerTransactions(JSONObject request) throws SLDException.ValidationException {
+    public void processPeerTransactions(JSONObject request) throws SOLException.ValidationException {
         JSONArray transactionsData = (JSONArray)request.get("transactions");
         processPeerTransactions(transactionsData);
     }
@@ -642,14 +642,14 @@ final class TransactionProcessorImpl implements TransactionProcessor {
                         processTransaction(unconfirmedTransaction);
                         iterator.remove();
                         addedUnconfirmedTransactions.add(unconfirmedTransaction.getTransaction());
-                    } catch (SLDException.ExistingTransactionException e) {
+                    } catch (SOLException.ExistingTransactionException e) {
                         iterator.remove();
-                    } catch (SLDException.NotCurrentlyValidException e) {
+                    } catch (SOLException.NotCurrentlyValidException e) {
                         if (unconfirmedTransaction.getExpiration() < currentTime
                                 || currentTime - Convert.toEpochTime(unconfirmedTransaction.getArrivalTimestamp()) > 3600) {
                             iterator.remove();
                         }
-                    } catch (SLDException.ValidationException|RuntimeException e) {
+                    } catch (SOLException.ValidationException|RuntimeException e) {
                         iterator.remove();
                     }
                 }
@@ -663,7 +663,7 @@ final class TransactionProcessorImpl implements TransactionProcessor {
     }
 
     
-    private void processPeerTransactions(JSONArray transactionsData) throws SLDException.NotValidException {
+    private void processPeerTransactions(JSONArray transactionsData) throws SOLException.NotValidException {
         if (Soldo.getBlockchain().getHeight() <= Constants.LAST_KNOWN_BLOCK && !testUnconfirmedTransactions) {
             return;
         }
@@ -716,8 +716,8 @@ final class TransactionProcessorImpl implements TransactionProcessor {
                 }
                 addedUnconfirmedTransactions.add(transaction);
 
-            } catch (SLDException.NotCurrentlyValidException ignore) {
-            } catch (SLDException.ValidationException|RuntimeException e) {
+            } catch (SOLException.NotCurrentlyValidException ignore) {
+            } catch (SOLException.ValidationException|RuntimeException e) {
                 Logger.logDebugMessage(String.format("Invalid transaction from peer: %s", ((JSONObject) transactionData).toJSONString()), e);
                 exceptions.add(e);
             }
@@ -730,51 +730,51 @@ final class TransactionProcessorImpl implements TransactionProcessor {
         }
         broadcastedTransactions.removeAll(receivedTransactions);
         if (!exceptions.isEmpty()) {
-            throw new SLDException.NotValidException("Peer sends invalid transactions: " + exceptions.toString());
+            throw new SOLException.NotValidException("Peer sends invalid transactions: " + exceptions.toString());
         }
     }
 
-    private void processTransaction(UnconfirmedTransaction unconfirmedTransaction) throws SLDException.ValidationException {
+    private void processTransaction(UnconfirmedTransaction unconfirmedTransaction) throws SOLException.ValidationException {
         TransactionImpl transaction = unconfirmedTransaction.getTransaction();
         int curTime = Soldo.getEpochTime();
         if  (!UnconfirmedTransaction.transactionBytesIsValid(transaction.getBytes())) {
-            throw new SLDException.NotValidException("Invalid transaction bytes");
+            throw new SOLException.NotValidException("Invalid transaction bytes");
         }
         if (transaction.getTimestamp() > curTime + Constants.MAX_TIMEDRIFT || transaction.getExpiration() < curTime) {
-            throw new SLDException.NotCurrentlyValidException("Invalid transaction timestamp");
+            throw new SOLException.NotCurrentlyValidException("Invalid transaction timestamp");
         }
         if (transaction.getVersion() < 1) {
-            throw new SLDException.NotValidException("Invalid transaction version");
+            throw new SOLException.NotValidException("Invalid transaction version");
         }
         if (transaction.getId() == 0L) {
-            throw new SLDException.NotValidException("Invalid transaction id 0");
+            throw new SOLException.NotValidException("Invalid transaction id 0");
         }
         BlockchainImpl.getInstance().writeLock();
         try {
             try {
                 Db.db.beginTransaction();
                 if (Soldo.getBlockchain().getHeight() <= Constants.LAST_KNOWN_BLOCK && !testUnconfirmedTransactions) {
-                    throw new SLDException.NotCurrentlyValidException("Blockchain not ready to accept transactions");
+                    throw new SOLException.NotCurrentlyValidException("Blockchain not ready to accept transactions");
                 }
 
                 if (getUnconfirmedTransaction(transaction.getDbKey()) != null || TransactionDb.hasTransaction(transaction.getId())) {
-                    throw new SLDException.ExistingTransactionException("Transaction already processed");
+                    throw new SOLException.ExistingTransactionException("Transaction already processed");
                 }
 
                 if (! transaction.verifySignature()) {
                     if (Account.getAccount(transaction.getSenderId()) != null) {
-                        throw new SLDException.NotValidException("Transaction signature verification failed");
+                        throw new SOLException.NotValidException("Transaction signature verification failed");
                     } else {
-                        throw new SLDException.NotCurrentlyValidException("Unknown transaction sender");
+                        throw new SOLException.NotCurrentlyValidException("Unknown transaction sender");
                     }
                 }
 
                 if (! transaction.applyUnconfirmed()) {
-                    throw new SLDException.InsufficientBalanceException("Insufficient balance");
+                    throw new SOLException.InsufficientBalanceException("Insufficient balance");
                 }
 
                 if (transaction.isUnconfirmedDuplicate(unconfirmedDuplicates)) {
-                    throw new SLDException.NotCurrentlyValidException("Duplicate unconfirmed transaction");
+                    throw new SOLException.NotCurrentlyValidException("Duplicate unconfirmed transaction");
                 }
 
                 unconfirmedTransactionTable.insert(unconfirmedTransaction);
@@ -850,7 +850,7 @@ final class TransactionProcessorImpl implements TransactionProcessor {
      * @throws  SoldoException.NotValidException    Transaction is not valid
      */
     @Override
-    public List<Transaction> restorePrunableData(JSONArray transactions) throws SLDException.NotValidException {
+    public List<Transaction> restorePrunableData(JSONArray transactions) throws SOLException.NotValidException {
         List<Transaction> processed = new ArrayList<>();
         Soldo.getBlockchain().readLock();
         try {

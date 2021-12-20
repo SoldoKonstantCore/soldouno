@@ -16,7 +16,7 @@
 
 package soldo.http;
 
-import soldo.SLDException;
+import soldo.SOLException;
 import soldo.Transaction;
 import soldo.util.Convert;
 import soldo.util.Logger;
@@ -34,7 +34,7 @@ public final class ParseTransaction extends APIServlet.APIRequestHandler {
     }
 
     @Override
-    protected JSONStreamAware processRequest(HttpServletRequest req) throws SLDException {
+    protected JSONStreamAware processRequest(HttpServletRequest req) throws SOLException {
 
         String transactionBytes = Convert.emptyToNull(req.getParameter("transactionBytes"));
         String transactionJSON = Convert.emptyToNull(req.getParameter("transactionJSON"));
@@ -44,7 +44,7 @@ public final class ParseTransaction extends APIServlet.APIRequestHandler {
         JSONObject response = JSONData.unconfirmedTransaction(transaction);
         try {
             transaction.validate();
-        } catch (SLDException.ValidationException|RuntimeException e) {
+        } catch (SOLException.ValidationException|RuntimeException e) {
             Logger.logDebugMessage(e.getMessage(), e);
             response.put("validate", false);
             JSONData.putException(response, e, "Invalid transaction");

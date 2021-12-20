@@ -16,7 +16,7 @@
 
 package soldo.util;
 
-import soldo.SLDException;
+import soldo.SOLException;
 
 import java.io.FilterInputStream;
 import java.io.IOException;
@@ -63,10 +63,10 @@ public class CountingInputStream extends FilterInputStream {
         return count;
     }
 
-    private void incCount(long n) throws SLDException.SoldoIOException {
+    private void incCount(long n) throws SOLException.SoldoIOException {
         count += n;
         if (count > limit) {
-            throw new SLDException.SoldoIOException("Maximum size exceeded: " + count);
+            throw new SOLException.SoldoIOException("Maximum size exceeded: " + count);
         }
     }
 }

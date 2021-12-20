@@ -22,7 +22,7 @@ import soldo.env.LookAndFeel;
 import javax.swing.*;
 
 @SuppressWarnings("UnusedDeclaration")
-public class SLDService_ServiceManagement {
+public class SOLService_ServiceManagement {
 
     public static boolean serviceInit() {
         LookAndFeel.init();

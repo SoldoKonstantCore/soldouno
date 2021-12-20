@@ -29,7 +29,8 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import soldo.SLDException;
+import java.util.logging.Level;
+import soldo.SOLException;
 
 import static soldo.user.JSONResponses.DENY_ACCESS;
 import static soldo.user.JSONResponses.INCORRECT_REQUEST;
@@ -38,7 +39,7 @@ import static soldo.user.JSONResponses.POST_REQUIRED;
 public final class UserServlet extends HttpServlet  {
 
     abstract static class UserRequestHandler {
-        abstract JSONStreamAware processRequest(HttpServletRequest request, User user) throws SLDException, IOException;
+        abstract JSONStreamAware processRequest(HttpServletRequest request, User user) throws SOLException, IOException;
         boolean requirePost() {
             return false;
         }
@@ -115,7 +116,7 @@ public final class UserServlet extends HttpServlet  {
                 user.enqueue(response);
             }
 
-        } catch (RuntimeException | SLDException e) {
+        } catch (RuntimeException | SOLException e) {
 
             Logger.logMessage("Error processing GET request", e);
             if (user != null) {
@@ -125,7 +126,7 @@ public final class UserServlet extends HttpServlet  {
                 user.enqueue(response);
             }
 
-        } finally {
+        }  finally {
 
             if (user != null) {
                 user.processPendingResponses(req, resp);

@@ -21,7 +21,7 @@ import soldo.Account;
 import soldo.Alias;
 import soldo.Attachment;
 import soldo.Constants;
-import soldo.SLDException;
+import soldo.SOLException;
 import soldo.util.Convert;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONStreamAware;
@@ -42,7 +42,7 @@ public final class SetAlias extends CreateTransaction {
     }
 
     @Override
-    protected JSONStreamAware processRequest(HttpServletRequest req) throws SLDException {
+    protected JSONStreamAware processRequest(HttpServletRequest req) throws SOLException {
         return JSONResponses.FEATURE_NOT_AVAILABLE;
 
     }

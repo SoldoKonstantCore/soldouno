@@ -55,13 +55,13 @@ public interface TransactionProcessor extends Observable<List<? extends Transact
 
     void rebroadcastAllUnconfirmedTransactions();
 
-    void broadcast(Transaction transaction) throws SLDException.ValidationException;
+    void broadcast(Transaction transaction) throws SOLException.ValidationException;
 
-    void processPeerTransactions(JSONObject request) throws SLDException.ValidationException;
+    void processPeerTransactions(JSONObject request) throws SOLException.ValidationException;
 
     void processLater(Collection<? extends Transaction> transactions);
 
     SortedSet<? extends Transaction> getCachedUnconfirmedTransactions(List<String> exclude);
 
-    List<Transaction> restorePrunableData(JSONArray transactions) throws SLDException.NotValidException;
+    List<Transaction> restorePrunableData(JSONArray transactions) throws SOLException.NotValidException;
 }

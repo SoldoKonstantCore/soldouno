@@ -14,7 +14,7 @@
  *
  */
 
-package slddesktop;
+package soldesktop;
 
 import com.sun.javafx.scene.web.Debugger;
 import javafx.application.Application;

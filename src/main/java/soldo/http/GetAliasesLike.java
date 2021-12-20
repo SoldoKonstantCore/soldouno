@@ -17,7 +17,7 @@
 package soldo.http;
 
 import soldo.Alias;
-import soldo.SLDException;
+import soldo.SOLException;
 import soldo.db.DbIterator;
 import soldo.util.Convert;
 import org.json.simple.JSONArray;
@@ -35,7 +35,7 @@ public final class GetAliasesLike extends APIServlet.APIRequestHandler {
     }
 
     @Override
-    protected JSONStreamAware processRequest(HttpServletRequest req) throws SLDException {
+    protected JSONStreamAware processRequest(HttpServletRequest req) throws SOLException {
         return JSONResponses.FEATURE_NOT_AVAILABLE;
     }
 

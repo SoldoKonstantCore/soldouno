@@ -17,7 +17,7 @@
 package soldo.http;
 
 import soldo.Soldo;
-import soldo.SLDException;
+import soldo.SOLException;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONStreamAware;
 
@@ -32,7 +32,7 @@ public final class GetAccountBlockCount extends APIServlet.APIRequestHandler {
     }
 
     @Override
-    protected JSONStreamAware processRequest(HttpServletRequest req) throws SLDException {
+    protected JSONStreamAware processRequest(HttpServletRequest req) throws SOLException {
 
         long accountId = ParameterParser.getAccountId(req, true);
         JSONObject response = new JSONObject();

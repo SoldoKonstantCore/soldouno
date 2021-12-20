@@ -18,7 +18,7 @@ package soldo.addons;
 
 import soldo.BlockchainProcessor;
 import soldo.Soldo;
-import soldo.SLDException;
+import soldo.SOLException;
 import soldo.http.APIServlet;
 import soldo.http.APITag;
 import org.json.simple.JSONObject;
@@ -39,7 +39,7 @@ public final class PopOffCounter implements AddOn {
     public APIServlet.APIRequestHandler getAPIRequestHandler() {
         return new APIServlet.APIRequestHandler(new APITag[]{APITag.ADDONS, APITag.BLOCKS}) {
             @Override
-            protected JSONStreamAware processRequest(HttpServletRequest request) throws SLDException {
+            protected JSONStreamAware processRequest(HttpServletRequest request) throws SOLException {
                 JSONObject response = new JSONObject();
                 response.put("numberOfPopOffs", numberOfPopOffs);
                 return response;

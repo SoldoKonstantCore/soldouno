@@ -28,7 +28,7 @@ public final class Demo implements AddOn {
     public void init() {
         Soldo.getBlockchainProcessor().addListener(block -> Logger.logInfoMessage("Block " + block.getStringId()
                 + " has been forged by account " + Convert.rsAccount(block.getGeneratorId()) + " having effective balance of "
-                + Account.getAccount(block.getGeneratorId()).getEffectiveBalanceSLD()),
+                + Account.getAccount(block.getGeneratorId()).getEffectiveBalanceSOL()),
                 BlockchainProcessor.Event.BEFORE_BLOCK_APPLY);
     }
 

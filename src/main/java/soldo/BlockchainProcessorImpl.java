@@ -22,7 +22,6 @@ import soldo.util.Logger;
 import soldo.util.Listeners;
 import soldo.util.JSON;
 import soldo.crypto.Crypto;
-import soldo.db.DbIterator;
 import soldo.db.DerivedDbTable;
 import soldo.db.FilteringIterator;
 import soldo.db.FullTextTrigger;
@@ -314,7 +313,7 @@ final class BlockchainProcessorImpl implements BlockchainProcessor {
                     blockchain.updateUnlock();
                     
                 }
-            } catch (SLDException.StopException e) {
+            } catch (SOLException.StopException e) {
                 Logger.logMessage("Blockchain download stopped: " + e.getMessage());
                 throw new InterruptedException("Blockchain download stopped");
             } catch (Exception e) {
@@ -711,7 +710,7 @@ final class BlockchainProcessorImpl implements BlockchainProcessor {
                     if (--count <= 0)
                         break;
                 }
-            } catch (RuntimeException | SLDException.NotValidException e) {
+            } catch (RuntimeException | SOLException.NotValidException e) {
                 Logger.logDebugMessage("call Failed to parse block: " + e.toString(), e);
                 peer.blacklist(e);
                 stop = start + blockList.size();
@@ -912,7 +911,7 @@ final class BlockchainProcessorImpl implements BlockchainProcessor {
                     }
                 }
                 Logger.logDebugMessage("Done retrieving prunable transactions from " + peer.getHost());
-            } catch (SLDException.ValidationException e) {
+            } catch (SOLException.ValidationException e) {
                 Logger.logErrorMessage("Peer " + peer.getHost() + " returned invalid prunable transaction", e);
                 peer.blacklist(e);
             } catch (RuntimeException e) {
@@ -1094,7 +1093,7 @@ final class BlockchainProcessorImpl implements BlockchainProcessor {
 
    
     @Override
-    public void processPeerBlock(JSONObject request) throws SLDException {
+    public void processPeerBlock(JSONObject request) throws SOLException {
         BlockImpl block = BlockImpl.parseBlock(request);
         if (block.getTransactions().size() > Constants.MAX_NUMBER_OF_TRANSACTIONS) {
             Logger.logWarningMessage("Refused block " + block.getId() + ", because it contains too many transactions");
@@ -1246,7 +1245,7 @@ final class BlockchainProcessorImpl implements BlockchainProcessor {
                     prunableTransactions.remove(transactionId);
                 }
                 return processed.get(0);
-            } catch (SLDException.NotValidException e) {
+            } catch (SOLException.NotValidException e) {
                 Logger.logErrorMessage("Peer " + peer.getHost() + " returned invalid prunable transaction", e);
                 peer.blacklist(e);
             }
@@ -1291,7 +1290,7 @@ final class BlockchainProcessorImpl implements BlockchainProcessor {
             List<TransactionImpl> transactions = new ArrayList<>();
             for (int i = 0; i < Genesis.GENESIS_RECIPIENTS.length; i++) {
                 TransactionImpl transaction = new TransactionImpl.BuilderImpl((byte) 0, Genesis.CREATOR_PUBLIC_KEY,
-                        Genesis.GENESIS_AMOUNTS[i] * Constants.ONE_SLD, 0, (short) 0,
+                        Genesis.GENESIS_AMOUNTS[i] * Constants.ONE_SOL, 0, (short) 0,
                         Attachment.ORDINARY_PAYMENT)
                         .timestamp(0)
                         .recipientId(Genesis.GENESIS_RECIPIENTS[i])
@@ -1316,7 +1315,7 @@ final class BlockchainProcessorImpl implements BlockchainProcessor {
                 ex.printStackTrace();
             }
             return true;
-        } catch (SLDException.ValidationException e) {
+        } catch (SOLException.ValidationException e) {
             Logger.logMessage(e.getMessage());
             throw new RuntimeException(e.toString(), e);
         }
@@ -1388,7 +1387,7 @@ final class BlockchainProcessorImpl implements BlockchainProcessor {
         }
         if (!block.verifyGenerationSignature() ){ 
             Account generatorAccount = Account.getAccount(block.getGeneratorId());
-            long generatorBalance = generatorAccount == null ? 0 : generatorAccount.getEffectiveBalanceSLD();
+            long generatorBalance = generatorAccount == null ? 0 : generatorAccount.getEffectiveBalanceSOL();
             throw new BlockNotAcceptedException("Generation signature verification failed, effective balance " + generatorBalance, block);
         }
         if (!block.verifyBlockSignature()) {
@@ -1437,7 +1436,7 @@ final class BlockchainProcessorImpl implements BlockchainProcessor {
                 }
                 try {
                     transaction.validate();
-                } catch (SLDException.ValidationException e) {
+                } catch (SOLException.ValidationException e) {
                     throw new TransactionNotAcceptedException(e.getMessage(), transaction);
                 }
             }
@@ -1639,7 +1638,7 @@ final class BlockchainProcessorImpl implements BlockchainProcessor {
                 }
                 try {
                     unconfirmedTransaction.getTransaction().validate();
-                } catch (SLDException.ValidationException e) {
+                } catch (SOLException.ValidationException e) {
                     continue;
                 }
                 if (unconfirmedTransaction.getTransaction().attachmentIsDuplicate(duplicates, true)) {
@@ -1792,7 +1791,7 @@ final class BlockchainProcessorImpl implements BlockchainProcessor {
                                 currentBlock = BlockDb.loadBlock(con, rs, true);
                                 currentBlock.loadTransactions();
                                 if (currentBlock.getId() != currentBlockId || currentBlock.getHeight() > blockchain.getHeight() + 1) {
-                                    throw new SLDException.NotValidException("Database blocks in the wrong order!");
+                                    throw new SOLException.NotValidException("Database blocks in the wrong order!");
                                 }
                                 Map<TransactionType, Map<String, Integer>> duplicates = new HashMap<>();
 
@@ -1802,7 +1801,7 @@ final class BlockchainProcessorImpl implements BlockchainProcessor {
                                     byte[] blockBytes = currentBlock.bytes();
                                     JSONObject blockJSON = (JSONObject) JSONValue.parse(currentBlock.getJSONObject().toJSONString());
                                     if (!Arrays.equals(blockBytes, BlockImpl.parseBlock(blockJSON).bytes())) {
-                                        throw new SLDException.NotValidException("Block JSON cannot be parsed back to the same block");
+                                        throw new SOLException.NotValidException("Block JSON cannot be parsed back to the same block");
                                     }
 
                                     validateTransactions(currentBlock, blockchain.getLastBlock(), curTime, duplicates, true);
@@ -1810,12 +1809,12 @@ final class BlockchainProcessorImpl implements BlockchainProcessor {
                                         byte[] transactionBytes = transaction.bytes();
                                         if (currentBlock.getHeight() > Constants.NQT_BLOCK
                                                 && !Arrays.equals(transactionBytes, TransactionImpl.newTransactionBuilder(transactionBytes).build().bytes())) {
-                                            throw new SLDException.NotValidException("Transaction bytes cannot be parsed back to the same transaction: "
+                                            throw new SOLException.NotValidException("Transaction bytes cannot be parsed back to the same transaction: "
                                                     + transaction.getJSONObject().toJSONString());
                                         }
                                         JSONObject transactionJSON = (JSONObject) JSONValue.parse(transaction.getJSONObject().toJSONString());
                                         if (!Arrays.equals(transactionBytes, TransactionImpl.newTransactionBuilder(transactionJSON).build().bytes())) {
-                                            throw new SLDException.NotValidException("Transaction JSON cannot be parsed back to the same transaction: "
+                                            throw new SOLException.NotValidException("Transaction JSON cannot be parsed back to the same transaction: "
                                                     + transaction.getJSONObject().toJSONString());
                                         }
                                     }
@@ -1827,7 +1826,7 @@ final class BlockchainProcessorImpl implements BlockchainProcessor {
                                 Db.db.clearCache();
                                 Db.db.commitTransaction();
                                 blockListeners.notify(currentBlock, Event.AFTER_BLOCK_ACCEPT);
-                            } catch (SLDException | RuntimeException e) {
+                            } catch (SOLException | RuntimeException e) {
                                 Db.db.rollbackTransaction();
                                 Logger.logDebugMessage(e.toString(), e);
                                 Logger.logDebugMessage("Applying block " + Long.toUnsignedString(currentBlockId) + " at height "

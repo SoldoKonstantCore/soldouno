@@ -4,7 +4,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONStreamAware;
 import soldo.Account;
 import soldo.Soldo;
-import soldo.SLDException;
+import soldo.SOLException;
 import soldo.Transaction;
 import soldo.db.DbIterator;
 import soldo.util.Convert;
@@ -21,17 +21,17 @@ public class GetMostLoyalParent extends SoldoTree.APIHierarchyRequestHandler {
     }
 
     @Override
-    protected JSONStreamAware processHierarchyRequest(HttpServletRequest req) throws SLDException {
+    protected JSONStreamAware processHierarchyRequest(HttpServletRequest req) throws SOLException {
 
         long accountId = ParameterParser.getAccountId(req, "accountChild", true);
         if (accountId == 0L)
             return SoldoTree.createErrorResponse("Invalid \"accountChild\"!", 9899);
         Account account = Account.getAccount(accountId);
         if (account == null)
-            throw new SLDException.NotValidException("Invalid account");
+            throw new SOLException.NotValidException("Invalid account");
         SoldoTree.AccountLoyaltyContainer container = SoldoTree.getMostLoyalParentFaster (account);
         if (container == null || container.account == null)
-            throw new SLDException.NotValidException ("Loyal parent not found (2)");
+            throw new SOLException.NotValidException ("Loyal parent not found (2)");
         JSONObject response = new JSONObject();
         response.put("loyalParent", Convert.rsAccount(container.account.getId()));
         response.put("loyalty", container.loyalty);

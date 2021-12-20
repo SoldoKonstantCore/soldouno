@@ -54,7 +54,7 @@ class UnconfirmedTransaction implements Transaction {
             this.transaction.setHeight(rs.getInt("transaction_height"));
             this.arrivalTimestamp = rs.getLong("arrival_timestamp");
             this.feePerByte = rs.getLong("fee_per_byte");
-        } catch (SLDException.ValidationException e) {
+        } catch (SOLException.ValidationException e) {
             throw new RuntimeException(e.toString(), e);
         }
     }
@@ -63,7 +63,7 @@ class UnconfirmedTransaction implements Transaction {
         if (bytes == null || bytes.length <= 0) return false;
         try {
             Soldo.newTransactionBuilder(bytes, null);
-        } catch (SLDException.NotValidException ex) {
+        } catch (SOLException.NotValidException ex) {
             return false;
         }
         return true;
@@ -222,7 +222,7 @@ class UnconfirmedTransaction implements Transaction {
     }
 
     @Override
-    public void validate() throws SLDException.ValidationException {
+    public void validate() throws SOLException.ValidationException {
         transaction.validate();
     }
 

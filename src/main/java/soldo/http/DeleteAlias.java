@@ -19,7 +19,7 @@ package soldo.http;
 import soldo.Account;
 import soldo.Alias;
 import soldo.Attachment;
-import soldo.SLDException;
+import soldo.SOLException;
 import org.json.simple.JSONStreamAware;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,7 +36,7 @@ public final class DeleteAlias extends CreateTransaction {
     }
 
     @Override
-    protected JSONStreamAware processRequest(final HttpServletRequest req) throws SLDException {
+    protected JSONStreamAware processRequest(final HttpServletRequest req) throws SOLException {
         return JSONResponses.FEATURE_NOT_AVAILABLE;
     }
 }

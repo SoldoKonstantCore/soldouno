@@ -14,7 +14,7 @@
  *
  */
 
-package slddesktop;
+package soldesktop;
 
 import com.sun.javafx.scene.control.skin.ContextMenuContent;
 import javafx.event.EventHandler;

@@ -633,7 +633,7 @@ var NRS = (function(NRS, $, undefined) {
 
 		html += '<div class="bottom d-flex justify-content-between">';
 		html += '<div class="type"><span class="title" data-i18n="type">Type</span> <span>' + transactionType + '</span></div>';
-		html += '<div class="type"><span class="title" data-i18n="fee">Fee</span> <span>' + formattedFee + ' SLD</span></div>';
+		html += '<div class="type"><span class="title" data-i18n="fee">Fee</span> <span>' + formattedFee + ' SOL</span></div>';
 		html += '</div>';
 		
 		html += '</div>'; //End of Value Left

@@ -17,7 +17,7 @@
 package soldo.http;
 
 import soldo.Soldo;
-import soldo.SLDException;
+import soldo.SOLException;
 import soldo.Transaction;
 import soldo.util.Convert;
 import org.json.simple.JSONObject;
@@ -67,7 +67,7 @@ public final class BroadcastTransaction extends APIServlet.APIRequestHandler {
             Soldo.getTransactionProcessor().broadcast(transaction);
             response.put("transaction", transaction.getStringId());
             response.put("fullHash", transaction.getFullHash());
-        } catch (SLDException.ValidationException|RuntimeException e) {
+        } catch (SOLException.ValidationException|RuntimeException e) {
             JSONData.putException(response, e, "Failed to broadcast transaction");
         }
         return response;

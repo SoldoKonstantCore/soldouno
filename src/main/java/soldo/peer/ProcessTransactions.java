@@ -17,7 +17,7 @@
 package soldo.peer;
 
 import soldo.Soldo;
-import soldo.SLDException;
+import soldo.SOLException;
 import soldo.util.JSON;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONStreamAware;
@@ -34,7 +34,7 @@ final class ProcessTransactions extends PeerServlet.PeerRequestHandler {
         try {
             Soldo.getTransactionProcessor().processPeerTransactions(request);
             return JSON.emptyJSON;
-        } catch (RuntimeException | SLDException.ValidationException e) {
+        } catch (RuntimeException | SOLException.ValidationException e) {
             peer.blacklist(e);
             return PeerServlet.error(e);
         }

@@ -17,7 +17,7 @@
 package soldo.tools;
 
 import soldo.Soldo;
-import soldo.env.service.SLDService_ServiceManagement;
+import soldo.env.service.SOLService_ServiceManagement;
 
 import java.io.IOException;
 import java.nio.file.FileVisitOption;
@@ -37,7 +37,7 @@ public class ManifestGenerator {
     public static void main(String[] args) {
         ManifestGenerator manifestGenerator = new ManifestGenerator();
         manifestGenerator.generate("./resource/manifest.mf", Soldo.class.getCanonicalName(), "./lib");
-        String serviceClassName = SLDService_ServiceManagement.class.getCanonicalName();
+        String serviceClassName = SOLService_ServiceManagement.class.getCanonicalName();
         serviceClassName = serviceClassName.substring(0, serviceClassName.length() - "_ServiceManagement".length());
         manifestGenerator.generate("./resource/service.manifest.mf", serviceClassName, "./lib");
     }

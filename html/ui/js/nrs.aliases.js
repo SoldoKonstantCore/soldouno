@@ -345,7 +345,7 @@ var NRS = (function (NRS, $, undefined) {
                     var aliasURI = [];
                     if (/http:\/\//i.test(response.aliasURI)) {
                         setAliasType("uri", response.aliasURI);
-                    } else if ((aliasURI = /acct:(.*)@sld/.exec(response.aliasURI)) || (aliasURI = /nacc:(.*)/.exec(response.aliasURI))) {
+                    } else if ((aliasURI = /acct:(.*)@sol/.exec(response.aliasURI)) || (aliasURI = /nacc:(.*)/.exec(response.aliasURI))) {
                         setAliasType("account", response.aliasURI);
                         response.aliasURI = String(aliasURI[1]).toUpperCase();
                     } else {
@@ -388,7 +388,7 @@ var NRS = (function (NRS, $, undefined) {
         data.aliasURI = $.trim(data.aliasURI).toLowerCase();
 
         if (data.type == "account") {
-            if (!(/acct:(.*)@sld/.test(data.aliasURI)) && !(/nacc:(.*)/.test(data.aliasURI))) {
+            if (!(/acct:(.*)@sol/.test(data.aliasURI)) && !(/nacc:(.*)/.test(data.aliasURI))) {
                 if (/^(SOLDO\-)/i.test(data.aliasURI)) {
                     var address = new SoldoAddress();
 
@@ -397,7 +397,7 @@ var NRS = (function (NRS, $, undefined) {
                             "error": $.t("error_invalid_account_id")
                         };
                     } else {
-                        data.aliasURI = "acct:" + data.aliasURI + "@sld";
+                        data.aliasURI = "acct:" + data.aliasURI + "@sol";
                     }
                 } else if (/^\d+$/.test(data.aliasURI)) {
                     return {
@@ -444,7 +444,7 @@ var NRS = (function (NRS, $, undefined) {
             registerAliasUri.val("").mask("SOLDO-****-****-****-*****");
 
             if (uri) {
-                var match = uri.match(/acct:(.*)@sld/i);
+                var match = uri.match(/acct:(.*)@sol/i);
                 if (!match) {
                     match = uri.match(/nacc:(.*)/i);
                 }

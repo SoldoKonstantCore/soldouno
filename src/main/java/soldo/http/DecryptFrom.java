@@ -17,7 +17,7 @@
 package soldo.http;
 
 import soldo.Account;
-import soldo.SLDException;
+import soldo.SOLException;
 import soldo.crypto.EncryptedData;
 import soldo.util.Convert;
 import soldo.util.Logger;
@@ -38,7 +38,7 @@ public final class DecryptFrom extends APIServlet.APIRequestHandler {
     }
 
     @Override
-    protected JSONStreamAware processRequest(HttpServletRequest req) throws SLDException {
+    protected JSONStreamAware processRequest(HttpServletRequest req) throws SOLException {
 
         byte[] publicKey = Account.getPublicKey(ParameterParser.getAccountId(req, true));
         if (publicKey == null) {

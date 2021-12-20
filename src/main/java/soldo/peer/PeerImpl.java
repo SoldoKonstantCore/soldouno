@@ -20,7 +20,7 @@ import soldo.Account;
 import soldo.BlockchainProcessor;
 import soldo.Constants;
 import soldo.Soldo;
-import soldo.SLDException;
+import soldo.SOLException;
 import soldo.http.API;
 import soldo.http.APIEnum;
 import soldo.util.Convert;
@@ -328,7 +328,7 @@ final class PeerImpl implements Peer {
             hallmarkBalance = account == null ? 0 : account.getBalanceNQT();
             hallmarkBalanceHeight = Soldo.getBlockchain().getHeight();
         }
-        return (int)(adjustedWeight * (hallmarkBalance / Constants.ONE_SLD) / Constants.MAX_BALANCE_SLD);
+        return (int)(adjustedWeight * (hallmarkBalance / Constants.ONE_SOL) / Constants.MAX_BALANCE_SOL);
     }
 
     @Override
@@ -339,7 +339,7 @@ final class PeerImpl implements Peer {
 
     @Override
     public void blacklist(Exception cause) {
-        if (cause instanceof SLDException.NotCurrentlyValidException || cause instanceof BlockchainProcessor.BlockOutOfOrderException
+        if (cause instanceof SOLException.NotCurrentlyValidException || cause instanceof BlockchainProcessor.BlockOutOfOrderException
                 || cause instanceof SQLException || cause.getCause() instanceof SQLException) {
             // don't blacklist peers just because a feature is not yet enabled, or because of database timeouts
             // prevents erroneous blacklisting during loading of blockchain from scratch
@@ -469,7 +469,7 @@ final class PeerImpl implements Peer {
             // Create a new WebSocket session if we don't have one
             //
             if (useWebSocket && !webSocket.isOpen()){
-                useWebSocket = webSocket.startClient(URI.create("ws://" + host + ":" + getPort() + "/servicesld"));
+                useWebSocket = webSocket.startClient(URI.create("ws://" + host + ":" + getPort() + "/servicesol"));
             }
             
             //
@@ -491,7 +491,7 @@ final class PeerImpl implements Peer {
                         showLog = true;
                     }
                     if (wsResponse.length() > maxResponseSize)
-                        throw new SLDException.SoldoIOException("Maximum size exceeded: " + wsResponse.length());
+                        throw new SOLException.SoldoIOException("Maximum size exceeded: " + wsResponse.length());
                     response = (JSONObject)JSONValue.parseWithException(wsResponse);
                     updateDownloadedVolume(wsResponse.length());
                 }
@@ -499,7 +499,7 @@ final class PeerImpl implements Peer {
                 //
                 // Send the request using HTTP
                 //
-                URL url = new URL("http://" + host + ":" + getPort() + "/servicesld");
+                URL url = new URL("http://" + host + ":" + getPort() + "/servicesol");
                 if (communicationLoggingMask != 0)
                     log = "\"" + url.toString() + "\": " + JSON.toString(request);
                 connection = (HttpURLConnection) url.openConnection();
@@ -574,7 +574,7 @@ final class PeerImpl implements Peer {
                     }
                 }
             }
-        } catch (SLDException.SoldoIOException e) {
+        } catch (SOLException.SoldoIOException e) {
             blacklist(e);
             if (connection != null) {
                 connection.disconnect();
@@ -798,7 +798,7 @@ final class PeerImpl implements Peer {
             }
 
             for (PeerImpl peer : groupedPeers) {
-                peer.adjustedWeight = Constants.MAX_BALANCE_SLD * peer.getHallmarkWeight(mostRecentDate) / totalWeight;
+                peer.adjustedWeight = Constants.MAX_BALANCE_SOL * peer.getHallmarkWeight(mostRecentDate) / totalWeight;
                 Peers.notifyListeners(peer, Peers.Event.WEIGHT);
             }
 

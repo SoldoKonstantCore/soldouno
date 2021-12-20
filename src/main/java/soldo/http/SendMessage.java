@@ -18,7 +18,7 @@ package soldo.http;
 
 import soldo.Account;
 import soldo.Attachment;
-import soldo.SLDException;
+import soldo.SOLException;
 import org.json.simple.JSONStreamAware;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,7 +32,7 @@ public final class SendMessage extends CreateTransaction {
     }
 
     @Override
-    protected JSONStreamAware processRequest(HttpServletRequest req) throws SLDException {
+    protected JSONStreamAware processRequest(HttpServletRequest req) throws SOLException {
         long recipientId = ParameterParser.getAccountId(req, "recipient", false);
         Account account = ParameterParser.getSenderAccount(req);
         return createTransaction(req, account, recipientId, 0, Attachment.ARBITRARY_MESSAGE);

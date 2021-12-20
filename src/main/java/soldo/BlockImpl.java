@@ -258,7 +258,7 @@ final class BlockImpl implements Block {
         return json;
     }
 
-    static BlockImpl parseBlock(JSONObject blockData) throws SLDException.NotValidException {
+    static BlockImpl parseBlock(JSONObject blockData) throws SOLException.NotValidException {
         try {
             int version = ((Long) blockData.get("version")).intValue();
             int timestamp = ((Long) blockData.get("timestamp")).intValue();
@@ -278,10 +278,10 @@ final class BlockImpl implements Block {
             BlockImpl block = new BlockImpl(version, timestamp, previousBlock, totalAmountNQT, totalFeeNQT, payloadLength, payloadHash, generatorPublicKey,
                     generationSignature, blockSignature, previousBlockHash, blockTransactions);
             if (!block.checkSignature()) {
-                throw new SLDException.NotValidException("Invalid block signature");
+                throw new SOLException.NotValidException("Invalid block signature");
             }
             return block;
-        } catch (SLDException.NotValidException | RuntimeException e) {
+        } catch (SOLException.NotValidException | RuntimeException e) {
             Logger.logDebugMessage("Failed to parse block: " + blockData.toJSONString());
             throw e;
         }
@@ -301,8 +301,8 @@ final class BlockImpl implements Block {
             buffer.putLong(previousBlockId);
             buffer.putInt(getTransactions().size());
             if (version < 3) {
-                buffer.putInt((int) (totalAmountNQT / Constants.ONE_SLD));
-                buffer.putInt((int) (totalFeeNQT / Constants.ONE_SLD));
+                buffer.putInt((int) (totalAmountNQT / Constants.ONE_SOL));
+                buffer.putInt((int) (totalFeeNQT / Constants.ONE_SOL));
             } else {
                 buffer.putLong(totalAmountNQT);
                 buffer.putLong(totalFeeNQT);
@@ -347,7 +347,7 @@ final class BlockImpl implements Block {
                 return false;
             }
             Account account = Account.getAccount(getGeneratorId());
-            long effectiveBalance = account == null ? 0 : account.getEffectiveBalanceSLD();
+            long effectiveBalance = account == null ? 0 : account.getEffectiveBalanceSOL();
             if (effectiveBalance <= 0) {
                 Logger.logDebugMessage("Refused block " + height + " because of zero effective balance");
                 return false;

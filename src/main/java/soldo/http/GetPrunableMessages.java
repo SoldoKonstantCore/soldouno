@@ -16,7 +16,7 @@
 
 package soldo.http;
 
-import soldo.SLDException;
+import soldo.SOLException;
 import soldo.PrunableMessage;
 import soldo.db.DbIterator;
 import org.json.simple.JSONArray;
@@ -34,7 +34,7 @@ public final class GetPrunableMessages extends APIServlet.APIRequestHandler {
     }
 
     @Override
-    protected JSONStreamAware processRequest(HttpServletRequest req) throws SLDException {
+    protected JSONStreamAware processRequest(HttpServletRequest req) throws SOLException {
         long accountId = ParameterParser.getAccountId(req, true);
         String secretPhrase = ParameterParser.getSecretPhrase(req, false);
         int firstIndex = ParameterParser.getFirstIndex(req);

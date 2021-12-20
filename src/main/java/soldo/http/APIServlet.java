@@ -19,7 +19,7 @@ package soldo.http;
 import soldo.Constants;
 import soldo.Db;
 import soldo.Soldo;
-import soldo.SLDException;
+import soldo.SOLException;
 import soldo.addons.AddOns;
 import soldo.util.JSON;
 import soldo.util.Logger;
@@ -89,9 +89,9 @@ public final class APIServlet extends HttpServlet {
             return fileParameter;
         }
 
-        protected abstract JSONStreamAware processRequest(HttpServletRequest request) throws SLDException;
+        protected abstract JSONStreamAware processRequest(HttpServletRequest request) throws SOLException;
 
-        protected JSONStreamAware processRequest(HttpServletRequest request, HttpServletResponse response) throws SLDException {
+        protected JSONStreamAware processRequest(HttpServletRequest request, HttpServletResponse response) throws SOLException {
             return processRequest(request);
         }
 
@@ -260,7 +260,7 @@ public final class APIServlet extends HttpServlet {
             }
         } catch (ParameterException e) {
             response = e.getErrorResponse();
-        } catch (SLDException | RuntimeException e) {
+        } catch (SOLException | RuntimeException e) {
             Logger.logDebugMessage("Error processing API request", e);
             JSONObject json = new JSONObject();
             JSONData.putException(json, e);

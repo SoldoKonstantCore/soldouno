@@ -1,0 +1,9 @@
+#!/bin/sh
+if [ -x jre/bin/java ]; then
+    JAVA=../jre/bin/java
+else
+    JAVA=../jre/bin/java
+fi
+echo "SOLDO is starting..."
+${JAVA} -Xms1g -Xmx3g -cp SoldoMG.jar:conf soldo.Soldo
+

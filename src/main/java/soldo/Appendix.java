@@ -156,7 +156,7 @@ public interface Appendix {
             return getBaselineFee(transaction);
         }
 
-        abstract void validate(Transaction transaction) throws SLDException.ValidationException;
+        abstract void validate(Transaction transaction) throws SOLException.ValidationException;
 
         abstract void apply(Transaction transaction, Account senderAccount, Account recipientAccount);
 
@@ -183,7 +183,7 @@ public interface Appendix {
             return new Message(attachmentData);
         }
 
-        private static final Fee MESSAGE_FEE = new Fee.SizeBasedFee(0, Constants.ONE_SLD, 32) {
+        private static final Fee MESSAGE_FEE = new Fee.SizeBasedFee(0, Constants.ONE_SOL, 32) {
             @Override
             public int getSize(TransactionImpl transaction, Appendix appendage) {
                 return ((Message) appendage).getMessage().length;
@@ -193,7 +193,7 @@ public interface Appendix {
         private final byte[] message;
         private final boolean isText;
 
-        Message(ByteBuffer buffer, byte transactionVersion) throws SLDException.NotValidException {
+        Message(ByteBuffer buffer, byte transactionVersion) throws SOLException.NotValidException {
             super(buffer, transactionVersion);
             int messageLength = buffer.getInt();
             this.isText = messageLength < 0; 
@@ -201,12 +201,12 @@ public interface Appendix {
                 messageLength &= Integer.MAX_VALUE;
             }
             if (messageLength > 1000) {
-                throw new SLDException.NotValidException("Invalid arbitrary message length: " + messageLength);
+                throw new SOLException.NotValidException("Invalid arbitrary message length: " + messageLength);
             }
             this.message = new byte[messageLength];
             buffer.get(this.message);
             if (isText && !Arrays.equals(message, Convert.toBytes(Convert.toString(message)))) {
-                throw new SLDException.NotValidException("Message is not UTF-8 text");
+                throw new SOLException.NotValidException("Message is not UTF-8 text");
             }
         }
 
@@ -262,9 +262,9 @@ public interface Appendix {
         }
 
         @Override
-        void validate(Transaction transaction) throws SLDException.ValidationException {
+        void validate(Transaction transaction) throws SOLException.ValidationException {
             if (message.length > Constants.MAX_ARBITRARY_MESSAGE_LENGTH) {
-                throw new SLDException.NotValidException("Invalid arbitrary message length: " + message.length);
+                throw new SOLException.NotValidException("Invalid arbitrary message length: " + message.length);
             }
         }
 
@@ -285,7 +285,7 @@ public interface Appendix {
 
         private static final String appendixName = "PrunablePlainMessage";
 
-        private static final Fee PRUNABLE_MESSAGE_FEE = new Fee.SizeBasedFee(Constants.ONE_SLD / 10) {
+        private static final Fee PRUNABLE_MESSAGE_FEE = new Fee.SizeBasedFee(Constants.ONE_SOL / 10) {
             @Override
             public int getSize(TransactionImpl transaction, Appendix appendix) {
                 return appendix.getFullSize();
@@ -383,16 +383,16 @@ public interface Appendix {
         }
 
         @Override
-        void validate(Transaction transaction) throws SLDException.ValidationException {
+        void validate(Transaction transaction) throws SOLException.ValidationException {
             if (transaction.getMessage() != null) {
-                throw new SLDException.NotValidException("Cannot have both message and prunable message attachments");
+                throw new SOLException.NotValidException("Cannot have both message and prunable message attachments");
             }
             byte[] msg = getMessage();
             if (msg != null && msg.length > Constants.MAX_PRUNABLE_MESSAGE_LENGTH) {
-                throw new SLDException.NotValidException("Invalid prunable message length: " + msg.length);
+                throw new SOLException.NotValidException("Invalid prunable message length: " + msg.length);
             }
             if (msg == null && Soldo.getEpochTime() - transaction.getTimestamp() < Constants.MIN_PRUNABLE_LIFETIME) {
-                throw new SLDException.NotCurrentlyValidException("Message has been pruned prematurely");
+                throw new SOLException.NotCurrentlyValidException("Message has been pruned prematurely");
             }
         }
 
@@ -451,7 +451,7 @@ public interface Appendix {
 
     abstract class AbstractEncryptedMessage extends AbstractAppendix {
 
-        private static final Fee ENCRYPTED_MESSAGE_FEE = new Fee.SizeBasedFee(Constants.ONE_SLD, Constants.ONE_SLD, 32) {
+        private static final Fee ENCRYPTED_MESSAGE_FEE = new Fee.SizeBasedFee(Constants.ONE_SOL, Constants.ONE_SOL, 32) {
             @Override
             public int getSize(TransactionImpl transaction, Appendix appendage) {
                 return ((AbstractEncryptedMessage) appendage).getEncryptedDataLength() - 16;
@@ -462,7 +462,7 @@ public interface Appendix {
         private final boolean isText;
         private final boolean isCompressed;
 
-        private AbstractEncryptedMessage(ByteBuffer buffer, byte transactionVersion) throws SLDException.NotValidException {
+        private AbstractEncryptedMessage(ByteBuffer buffer, byte transactionVersion) throws SOLException.NotValidException {
             super(buffer, transactionVersion);
             int length = buffer.getInt();
             this.isText = length < 0;
@@ -516,18 +516,18 @@ public interface Appendix {
         }
 
         @Override
-        void validate(Transaction transaction) throws SLDException.ValidationException {
+        void validate(Transaction transaction) throws SOLException.ValidationException {
             if (Soldo.getBlockchain().getHeight() > Constants.ADVANCED_MESSAGING_VALIDATION && getEncryptedDataLength() > Constants.MAX_ENCRYPTED_MESSAGE_LENGTH) {
-                throw new SLDException.NotValidException("Max encrypted message length exceeded");
+                throw new SOLException.NotValidException("Max encrypted message length exceeded");
             }
             if (encryptedData != null) {
                 if ((encryptedData.getNonce().length != 32 && encryptedData.getData().length > 0)
                         || (encryptedData.getNonce().length != 0 && encryptedData.getData().length == 0)) {
-                    throw new SLDException.NotValidException("Invalid nonce length " + encryptedData.getNonce().length);
+                    throw new SOLException.NotValidException("Invalid nonce length " + encryptedData.getNonce().length);
                 }
             }
             if ((getVersion() != 2 && !isCompressed) || (getVersion() == 2 && isCompressed)) {
-                throw new SLDException.NotValidException("Version mismatch - version " + getVersion() + ", isCompressed " + isCompressed);
+                throw new SOLException.NotValidException("Version mismatch - version " + getVersion() + ", isCompressed " + isCompressed);
             }
         }
 
@@ -564,7 +564,7 @@ public interface Appendix {
 
         private static final String appendixName = "PrunableEncryptedMessage";
 
-        private static final Fee PRUNABLE_ENCRYPTED_DATA_FEE = new Fee.SizeBasedFee(Constants.ONE_SLD / 10) {
+        private static final Fee PRUNABLE_ENCRYPTED_DATA_FEE = new Fee.SizeBasedFee(Constants.ONE_SOL / 10) {
             @Override
             public int getSize(TransactionImpl transaction, Appendix appendix) {
                 return appendix.getFullSize();
@@ -669,26 +669,26 @@ public interface Appendix {
         }
 
         @Override
-        void validate(Transaction transaction) throws SLDException.ValidationException {
+        void validate(Transaction transaction) throws SOLException.ValidationException {
             if (transaction.getEncryptedMessage() != null) {
-                throw new SLDException.NotValidException("Cannot have both encrypted and prunable encrypted message attachments");
+                throw new SOLException.NotValidException("Cannot have both encrypted and prunable encrypted message attachments");
             }
             EncryptedData ed = getEncryptedData();
             if (ed == null && Soldo.getEpochTime() - transaction.getTimestamp() < Constants.MIN_PRUNABLE_LIFETIME) {
-                throw new SLDException.NotCurrentlyValidException("Encrypted message has been pruned prematurely");
+                throw new SOLException.NotCurrentlyValidException("Encrypted message has been pruned prematurely");
             }
             if (ed != null) {
                 if (ed.getData().length > Constants.MAX_PRUNABLE_ENCRYPTED_MESSAGE_LENGTH) {
-                    throw new SLDException.NotValidException(String.format("Message length %d exceeds max prunable encrypted message length %d",
+                    throw new SOLException.NotValidException(String.format("Message length %d exceeds max prunable encrypted message length %d",
                             ed.getData().length, Constants.MAX_PRUNABLE_ENCRYPTED_MESSAGE_LENGTH));
                 }
                 if ((ed.getNonce().length != 32 && ed.getData().length > 0)
                         || (ed.getNonce().length != 0 && ed.getData().length == 0)) {
-                    throw new SLDException.NotValidException("Invalid nonce length " + ed.getNonce().length);
+                    throw new SOLException.NotValidException("Invalid nonce length " + ed.getNonce().length);
                 }
             }
             if (transaction.getRecipientId() == 0) {
-                throw new SLDException.NotValidException("Encrypted messages cannot be attached to transactions with no recipient");
+                throw new SOLException.NotValidException("Encrypted messages cannot be attached to transactions with no recipient");
             }
         }
 
@@ -785,7 +785,7 @@ public interface Appendix {
         @Override
         void putMyBytes(ByteBuffer buffer) {
             if (getEncryptedData() == null) {
-                throw new SLDException.NotYetEncryptedException("Prunable encrypted message not yet encrypted");
+                throw new SOLException.NotYetEncryptedException("Prunable encrypted message not yet encrypted");
             }
             super.putMyBytes(buffer);
         }
@@ -805,11 +805,11 @@ public interface Appendix {
         }
 
         @Override
-        void validate(Transaction transaction) throws SLDException.ValidationException {
+        void validate(Transaction transaction) throws SOLException.ValidationException {
             if (getEncryptedData() == null) {
                 int dataLength = getEncryptedDataLength();
                 if (dataLength > Constants.MAX_PRUNABLE_ENCRYPTED_MESSAGE_LENGTH) {
-                    throw new SLDException.NotValidException(String.format("Message length %d exceeds max prunable encrypted message length %d",
+                    throw new SOLException.NotValidException(String.format("Message length %d exceeds max prunable encrypted message length %d",
                             dataLength, Constants.MAX_PRUNABLE_ENCRYPTED_MESSAGE_LENGTH));
                 }
             } else {
@@ -820,7 +820,7 @@ public interface Appendix {
         @Override
         void apply(Transaction transaction, Account senderAccount, Account recipientAccount) {
             if (getEncryptedData() == null) {
-                throw new SLDException.NotYetEncryptedException("Prunable encrypted message not yet encrypted");
+                throw new SOLException.NotYetEncryptedException("Prunable encrypted message not yet encrypted");
             }
             super.apply(transaction, senderAccount, recipientAccount);
         }
@@ -859,7 +859,7 @@ public interface Appendix {
             return new EncryptedMessage(attachmentData);
         }
 
-        EncryptedMessage(ByteBuffer buffer, byte transactionVersion) throws SLDException.NotValidException {
+        EncryptedMessage(ByteBuffer buffer, byte transactionVersion) throws SOLException.NotValidException {
             super(buffer, transactionVersion);
         }
 
@@ -884,10 +884,10 @@ public interface Appendix {
         }
 
         @Override
-        void validate(Transaction transaction) throws SLDException.ValidationException {
+        void validate(Transaction transaction) throws SOLException.ValidationException {
             super.validate(transaction);
             if (transaction.getRecipientId() == 0) {
-                throw new SLDException.NotValidException("Encrypted messages cannot be attached to transactions with no recipient");
+                throw new SOLException.NotValidException("Encrypted messages cannot be attached to transactions with no recipient");
             }
         }
 
@@ -924,7 +924,7 @@ public interface Appendix {
         @Override
         void putMyBytes(ByteBuffer buffer) {
             if (getEncryptedData() == null) {
-                throw new SLDException.NotYetEncryptedException("Message not yet encrypted");
+                throw new SOLException.NotYetEncryptedException("Message not yet encrypted");
             }
             super.putMyBytes(buffer);
         }
@@ -946,7 +946,7 @@ public interface Appendix {
         @Override
         void apply(Transaction transaction, Account senderAccount, Account recipientAccount) {
             if (getEncryptedData() == null) {
-                throw new SLDException.NotYetEncryptedException("Message not yet encrypted");
+                throw new SOLException.NotYetEncryptedException("Message not yet encrypted");
             }
             super.apply(transaction, senderAccount, recipientAccount);
         }
@@ -981,7 +981,7 @@ public interface Appendix {
             return new EncryptToSelfMessage(attachmentData);
         }
 
-        EncryptToSelfMessage(ByteBuffer buffer, byte transactionVersion) throws SLDException.NotValidException {
+        EncryptToSelfMessage(ByteBuffer buffer, byte transactionVersion) throws SOLException.NotValidException {
             super(buffer, transactionVersion);
         }
 
@@ -1035,7 +1035,7 @@ public interface Appendix {
         @Override
         void putMyBytes(ByteBuffer buffer) {
             if (getEncryptedData() == null) {
-                throw new SLDException.NotYetEncryptedException("Message not yet encrypted");
+                throw new SOLException.NotYetEncryptedException("Message not yet encrypted");
             }
             super.putMyBytes(buffer);
         }
@@ -1056,7 +1056,7 @@ public interface Appendix {
         @Override
         void apply(Transaction transaction, Account senderAccount, Account recipientAccount) {
             if (getEncryptedData() == null) {
-                throw new SLDException.NotYetEncryptedException("Message not yet encrypted");
+                throw new SOLException.NotYetEncryptedException("Message not yet encrypted");
             }
             super.apply(transaction, senderAccount, recipientAccount);
         }
@@ -1126,20 +1126,20 @@ public interface Appendix {
         }
 
         @Override
-        void validate(Transaction transaction) throws SLDException.ValidationException {
+        void validate(Transaction transaction) throws SOLException.ValidationException {
             if (transaction.getRecipientId() == 0) {
-                throw new SLDException.NotValidException("PublicKeyAnnouncement cannot be attached to transactions with no recipient");
+                throw new SOLException.NotValidException("PublicKeyAnnouncement cannot be attached to transactions with no recipient");
             }
             if (!Crypto.isCanonicalPublicKey(publicKey)) {
-                throw new SLDException.NotValidException("Invalid recipient public key: " + Convert.toHexString(publicKey));
+                throw new SOLException.NotValidException("Invalid recipient public key: " + Convert.toHexString(publicKey));
             }
             long recipientId = transaction.getRecipientId();
             if (Account.getId(this.publicKey) != recipientId) {
-                throw new SLDException.NotValidException("Announced public key does not match recipient accountId");
+                throw new SOLException.NotValidException("Announced public key does not match recipient accountId");
             }
             byte[] recipientPublicKey = Account.getPublicKey(recipientId);
             if (recipientPublicKey != null && !Arrays.equals(publicKey, recipientPublicKey)) {
-                throw new SLDException.NotCurrentlyValidException("A different public key for this account has already been announced");
+                throw new SOLException.NotCurrentlyValidException("A different public key for this account has already been announced");
             }
         }
 

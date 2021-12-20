@@ -20,10 +20,10 @@ import java.nio.file.Paths;
 
 public class UnixUserDirProvider extends DesktopUserDirProvider {
 
-    private static final String SLD_USER_HOME = Paths.get(System.getProperty("user.home"), ".soldo").toString();
+    private static final String SOL_USER_HOME = Paths.get(System.getProperty("user.home"), ".soldo").toString();
 
     @Override
     public String getUserHomeDir() {
-        return SLD_USER_HOME;
+        return SOL_USER_HOME;
     }
 }

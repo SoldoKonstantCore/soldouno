@@ -21,7 +21,7 @@ import soldo.Appendix;
 import soldo.Attachment;
 import soldo.Constants;
 import soldo.Soldo;
-import soldo.SLDException;
+import soldo.SOLException;
 import soldo.Transaction;
 import soldo.crypto.Crypto;
 import soldo.util.Convert;
@@ -73,17 +73,17 @@ abstract class CreateTransaction extends APIServlet.APIRequestHandler {
     }
 
     final JSONStreamAware createTransaction(HttpServletRequest req, Account senderAccount, Attachment attachment)
-            throws SLDException {
+            throws SOLException {
         return createTransaction(req, senderAccount, 0, 0, attachment);
     }
 
     final JSONStreamAware createTransaction(HttpServletRequest req, Account senderAccount, long recipientId, long amountNQT)
-            throws SLDException {
+            throws SOLException {
         return createTransaction(req, senderAccount, recipientId, amountNQT, Attachment.ORDINARY_PAYMENT);
     }
 
     final JSONStreamAware createTransaction(HttpServletRequest req, Account senderAccount, long recipientId,
-                                            long amountNQT, Attachment attachment) throws SLDException {
+                                            long amountNQT, Attachment attachment) throws SOLException {
         String deadlineValue = req.getParameter("deadline");
         String referencedTransactionFullHash = Convert.emptyToNull(req.getParameter("referencedTransactionFullHash"));
         String secretPhrase = ParameterParser.getSecretPhrase(req, false);
@@ -172,7 +172,7 @@ abstract class CreateTransaction extends APIServlet.APIRequestHandler {
             response.put("transactionJSON", transactionJSON);
             try {
                 response.put("unsignedTransactionBytes", Convert.toHexString(transaction.getUnsignedBytes()));
-            } catch (SLDException.NotYetEncryptedException ignore) {}
+            } catch (SOLException.NotYetEncryptedException ignore) {}
             if (secretPhrase != null) {
                 response.put("transaction", transaction.getStringId());
                 response.put("fullHash", transactionJSON.get("fullHash"));
@@ -186,11 +186,11 @@ abstract class CreateTransaction extends APIServlet.APIRequestHandler {
                 transaction.validate();
                 response.put("broadcasted", false);
             }
-        } catch (SLDException.NotYetEnabledException e) {
+        } catch (SOLException.NotYetEnabledException e) {
             return FEATURE_NOT_AVAILABLE;
-        } catch (SLDException.InsufficientBalanceException e) {
+        } catch (SOLException.InsufficientBalanceException e) {
             throw e;
-        } catch (SLDException.ValidationException e) {
+        } catch (SOLException.ValidationException e) {
             if (broadcast) {
                 response.clear();
             }

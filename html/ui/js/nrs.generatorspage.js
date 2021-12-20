@@ -29,7 +29,7 @@ var NRS = (function(NRS) {
 				if (NRS.currentPage != "generators") {
 					clearInterval(timer);
 				} else {
-				NRS.sendRequest("getSLDActivGenerators", {}, function(response) {
+				NRS.sendRequest("getSOLActivGenerators", {}, function(response) {
 					var rows = "";
 					const objectArray = Object.entries(response);
 					objectArray.forEach(([key, value]) => {

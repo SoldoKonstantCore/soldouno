@@ -18,7 +18,7 @@ package soldo.peer;
 
 import soldo.Block;
 import soldo.Soldo;
-import soldo.SLDException;
+import soldo.SOLException;
 import soldo.util.Convert;
 import soldo.util.JSON;
 import org.json.simple.JSONObject;
@@ -40,7 +40,7 @@ final class ProcessBlock extends PeerServlet.PeerRequestHandler {
             Peers.peersService.submit(() -> {
                 try {
                     Soldo.getBlockchainProcessor().processPeerBlock(request);
-                } catch (SLDException | RuntimeException e) {
+                } catch (SOLException | RuntimeException e) {
                     Soldo.softMG().rollbackToBlock(Soldo.getBlockchain().getHeight());
                     if (peer != null) {
                         peer.blacklist(e);

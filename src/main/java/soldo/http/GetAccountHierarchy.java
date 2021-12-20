@@ -6,7 +6,7 @@ import org.json.simple.JSONStreamAware;
 import soldo.Account;
 import soldo.Db;
 import soldo.Soldo;
-import soldo.SLDException;
+import soldo.SOLException;
 import soldo.util.Convert;
 import soldo.util.Logger;
 import soldo.util.SoldoTree;
@@ -28,7 +28,7 @@ public class GetAccountHierarchy extends SoldoTree.APIHierarchyRequestHandler {
 
     public static final int         MAX_DEPTH_PER_REQUEST =                 10;  
 
-    protected JSONStreamAware processHierarchyRequest(HttpServletRequest req) throws SLDException {
+    protected JSONStreamAware processHierarchyRequest(HttpServletRequest req) throws SOLException {
         if (Soldo.softMG().getConnection() == null) {
             JSONObject response = new JSONObject();
             response.put("errorDescription", "GetAccountChildren API failed to connect to the database");

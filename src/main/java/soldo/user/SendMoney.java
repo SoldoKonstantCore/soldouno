@@ -20,7 +20,7 @@ import soldo.Account;
 import soldo.Attachment;
 import soldo.Constants;
 import soldo.Soldo;
-import soldo.SLDException;
+import soldo.SOLException;
 import soldo.Transaction;
 import soldo.util.Convert;
 import org.json.simple.JSONObject;
@@ -38,7 +38,7 @@ public final class SendMoney extends UserServlet.UserRequestHandler {
     private SendMoney() {}
 
     @Override
-    JSONStreamAware processRequest(HttpServletRequest req, User user) throws SLDException.ValidationException, IOException {
+    JSONStreamAware processRequest(HttpServletRequest req, User user) throws SOLException.ValidationException, IOException {
         if (user.getSecretPhrase() == null) {
             return null;
         }
@@ -99,7 +99,7 @@ public final class SendMoney extends UserServlet.UserRequestHandler {
 
             return response;
 
-        } else if (feeNQT < Constants.ONE_SLD || feeNQT > Constants.MAX_BALANCE_centesimo) {
+        } else if (feeNQT < Constants.ONE_SOL || feeNQT > Constants.MAX_BALANCE_centesimo) {
             JSONObject response = new JSONObject();
             response.put("response", "notifyOfIncorrectTransaction");
             response.put("message", "\"Fee\" must be at least 0.000015 SOLDO!");

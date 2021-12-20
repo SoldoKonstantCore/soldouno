@@ -17,7 +17,7 @@
 package soldo.util;
 
 import soldo.Constants;
-import soldo.SLDException;
+import soldo.SOLException;
 import soldo.crypto.Crypto;
 
 import java.io.ByteArrayInputStream;
@@ -238,10 +238,10 @@ public final class Convert {
         return bytes;
     }
 
-    public static String readString(ByteBuffer buffer, int numBytes, int maxLength) throws SLDException.NotValidException {
+    public static String readString(ByteBuffer buffer, int numBytes, int maxLength) throws SOLException.NotValidException {
         if (buffer == null || numBytes <= 0 || maxLength <= 0) return "";
         if (numBytes > 3 * maxLength) {
-            throw new SLDException.NotValidException("Max parameter length exceeded: "+numBytes+" / "+maxLength);
+            throw new SOLException.NotValidException("Max parameter length exceeded: "+numBytes+" / "+maxLength);
         }
         byte[] bytes = new byte[numBytes];
         buffer.get(bytes);
@@ -253,7 +253,7 @@ public final class Convert {
     }
 
     public static long parseSOLDO(String soldo) {
-        return parseStringFraction(soldo, 6, Constants.MAX_BALANCE_SLD);
+        return parseStringFraction(soldo, 6, Constants.MAX_BALANCE_SOL);
     }
 
     private static long parseStringFraction(String value, int decimals, long maxValue) {

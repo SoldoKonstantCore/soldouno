@@ -144,7 +144,7 @@ public final class Users {
             }
 
             ServletHandler userHandler = new ServletHandler();
-            ServletHolder userHolder = userHandler.addServletWithMapping(UserServlet.class, "/servicesld");
+            ServletHolder userHolder = userHandler.addServletWithMapping(UserServlet.class, "/servicesol");
             userHolder.setAsyncSupported(true);
 
             if (Soldo.getBooleanProperty("soldo.uiServerCORS")) {
