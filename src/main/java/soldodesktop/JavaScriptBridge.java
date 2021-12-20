@@ -14,7 +14,7 @@
  *
  */
 
-package soldesktop;
+package soldodesktop;
 
 import javafx.application.Platform;
 import javafx.scene.input.Clipboard;

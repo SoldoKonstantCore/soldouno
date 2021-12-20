@@ -14,7 +14,7 @@
  *
  */
 
-package soldesktop;
+package soldodesktop;
 
 import com.sun.javafx.scene.web.Debugger;
 import javafx.application.Application;
