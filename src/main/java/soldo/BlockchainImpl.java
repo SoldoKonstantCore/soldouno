@@ -676,9 +676,14 @@ final class BlockchainImpl implements Blockchain {
             
             if(rs.next()) lastblh = rs.getInt("height");
             
-            int yaForgu = deepH-(blockchainHeight-lastblh);
+           int miforg =0;
+            if(blockchainHeight<deepH){
+                miforg = lastblh;
+            }else{
+                miforg = deepH-(blockchainHeight-lastblh);
+            }
            
-            return yaForgu<1?0:yaForgu;
+            return miforg<1?0:miforg;
         } catch (SQLException e) {
             DbUtils.close(rs, pstmt, con);
             throw new RuntimeException(e.toString(), e);
