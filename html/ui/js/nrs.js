@@ -1044,7 +1044,7 @@ var NRS = (function (NRS, $, undefined) {
                                         }
                                         $("#account_hold").html(NRS.formatStyledAmount(response.hold));
                                         NRS.softMGCounterId = setInterval(function () {
-                                            var _forPerc = new soldo.SoftMG().calc(parseInt(_softMG.balance), parseInt(_softMG.amount), Number(_softMG.last), emission, forgePercent);
+                                            var _forPerc = new soldo.SoftMG().calc(Number(_softMG.balance), Number(_softMG.amount), Number(_softMG.last), Number(_softMG._genesisEM), Number(_softMG._forgePercent));
                                             $("#account_softMG").html(NRS.formatNumberSmart( _forPerc ));
 
                                             

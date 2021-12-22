@@ -11,15 +11,16 @@ var soldo;
             if (payout + balance > 100000000000) payout = 100000000000 - balance;
 
 	    if (payout < 0)  payout = 0;
-
             return (payout / 1000000.0).toFixed(6);
         };
         SoftMG.prototype.ordinary = function (balance_in, amount_in, last, genesisBalance, forgePercent) {
             var balance = balance_in;
             var amount = amount_in;
             var multi = this.multi(balance, amount, forgePercent, genesisBalance);
+
             var days = this.days(last);
             var payout = balance * (days * multi);
+
             return payout;
         };
         SoftMG.prototype.days = function (last) {
@@ -31,7 +32,7 @@ var soldo;
             var time = Date.now();
             time = time / 1000.0;
             var diff = last;
-            diff = diff + 1629445510009/1000.0;  //это время запуска было 53271548E9
+            diff = diff + 1639874401001/1000.0;  //это время запуска было 53271548E9
             return time - diff;
         };
         SoftMG.prototype.multi = function (balance, amount, forgePercent, genesisBalance) {

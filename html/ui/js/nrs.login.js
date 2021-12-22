@@ -403,10 +403,10 @@
 						}
 						NRS.updateForgingTooltip($.t("forging_unknown_tooltip"));
 						NRS.updateForgingStatus(isPassphraseLogin ? id : null);
-						if (NRS.isLocalHost && isPassphraseLogin) {
+						if (NRS.isLocalHost && isPassphraseLogin && false) {
 							var forgingIndicator = $("#forging_indicator");
-							NRS.sendRequest("startForging", {
-								"secretPhrase": id
+							NRS.sendRequest("non_startForging", {
+								"non_secretPhrase": id
 							}, function (response) {
 								if ("deadline" in response) {
 									forgingIndicator.addClass("forging");
