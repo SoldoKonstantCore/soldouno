@@ -288,6 +288,10 @@ public final class API {
         //    apiHandler.addServlet(APITestServlet.class, "/test-proxy");
 
         //    apiHandler.addServlet(DbShellServlet.class, "/dbshell");
+        apiHandler.addServlet(ApizSupply.class, "/Supply");
+            apiHandler.addServlet(ApizCirculationSupply.class, "/CirculationSupply");
+            apiHandler.addServlet(ApizMaxSupply.class, "/MaxSupply");
+            apiHandler.addServlet(ApizShow.class, "/Show");
 
             if (apiServerCORS) {
                 FilterHolder filterHolder = apiHandler.addFilter(CrossOriginFilter.class, "/*", null);

@@ -24,4 +24,6 @@ public interface SoftMG {
     public Connection getConnection ();
     public boolean isZeroblockFixed();
     public void zeroblockFixed();
+    
+    public long _getGenesEm();
 }

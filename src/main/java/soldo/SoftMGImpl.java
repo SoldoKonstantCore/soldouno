@@ -2301,4 +2301,16 @@ metrics.setGenesisEmission(getGenesisEmission());
    
         return fee;
     }
+    
+    @Override
+     public long  _getGenesEm(){
+        long gem=-1;
+        try {
+            gem= getGenesisEmission();
+        } catch (SQLException ex) {
+            return gem;
+            //java.util.logging.Logger.getLogger(SoftMGImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return gem;
+    }
 }
